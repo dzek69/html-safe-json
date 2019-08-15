@@ -1,0 +1,7 @@
+/.idea/
+/docs/
+/dist/
+/node_modules/
+
+/*.tgz
+*.log

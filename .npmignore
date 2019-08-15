@@ -1,0 +1,16 @@
+/.idea/
+/build-scripts/
+/test/
+/dist/**/*.spec.js
+/benchmark
+/src/examples
+/dist/examples
+
+/.babelrc
+/yarn.lock
+/*.tgz
+/*.log
+/jsdoc.json
+/.yarnclean
+/.editorconfig
+/.eslintrc.json

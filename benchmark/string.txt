@@ -1,0 +1,1498 @@
+// view-source:https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="no-js">
+<head prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
+  <title>JSON.stringify() - JavaScript | MDN</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+
+
+<link rel="preload" href="https://developer.mozilla.org/static/fonts/locales/ZillaSlab-Bold.subset.e96c15f68c68.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="home" href="/en-US/">
+    <link rel="license" href="#license">
+
+
+
+
+
+
+    <link href="https://developer.mozilla.org/static/build/styles/mdn.e358b2ef4194.css" rel="stylesheet" type="text/css" />
+
+
+
+    <link href="https://developer.mozilla.org/static/build/styles/wiki.8f09ebd6a853.css" rel="stylesheet" type="text/css" />
+
+
+
+      <link href="https://developer.mozilla.org/static/build/styles/banners.43f6e8e4034d.css" rel="stylesheet" type="text/css" />
+
+
+
+
+<style>
+    @font-face {
+        font-family: zillaslab;
+        font-display: swap;
+        src: url(https://developer.mozilla.org/static/fonts/locales/ZillaSlab-Regular.subset.bbc33fb47cf6.woff2) format('woff2'),
+             url(https://developer.mozilla.org/static/fonts/locales/ZillaSlab-Regular.subset.0357f12613a7.woff) format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: zillaslab;
+        font-display: swap;
+        src: url(https://developer.mozilla.org/static/fonts/locales/ZillaSlab-Bold.subset.e96c15f68c68.woff2) format('woff2'),
+             url(https://developer.mozilla.org/static/fonts/locales/ZillaSlab-Bold.subset.da0ccde4ca4a.woff) format('woff');
+        font-weight: bold;
+        font-style: normal;
+    }
+</style>
+
+
+
+
+    <script>
+    // Mozilla DNT Helper
+    /* This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/. */ if(typeof Mozilla==='undefined'){var Mozilla={}}Mozilla.dntEnabled=function(dnt,ua){'use strict';var dntStatus=dnt||navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack;var userAgent=ua||navigator.userAgent;var anomalousWinVersions=['Windows NT 6.1','Windows NT 6.2','Windows NT 6.3'];var fxMatch=userAgent.match(/Firefox\/(\d+)/);var ieRegEx=/MSIE|Trident/i;var isIE=ieRegEx.test(userAgent);var platform=userAgent.match(/Windows.+?(?=;)/g);if(isIE&&typeof Array.prototype.indexOf!=='function'){return false}else if(fxMatch&&parseInt(fxMatch[1],10)<32){dntStatus='Unspecified'}else if(isIE&&platform&&anomalousWinVersions.indexOf(platform.toString())!==-1){dntStatus='Unspecified'}else{dntStatus={'0':'Disabled','1':'Enabled'}[dntStatus]||'Unspecified'}return dntStatus==='Enabled'?true:false};
+    // only load GA if DNT is not enabled
+    if (Mozilla && !Mozilla.dntEnabled()) {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-36116321-5', 'mozilla.org');
+        ga('set', 'anonymizeIp', true);
+
+
+
+        // dimension9 == "Section editing"
+
+            // dimension12 == 'Page Revision'
+            ga('set', 'dimension12', '1564273');
+            // dimension17 == 'English Slug'
+            ga('set', 'dimension17', 'Web/JavaScript/Reference/Global_Objects/JSON/stringify');
+
+        (function() {
+            // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
+            var win = window;
+            var removeUtms = function(){
+                var location = win.location;
+                if (location.href.indexOf('utm') != -1 && win.history.replaceState) {
+                    win.history.replaceState({}, '', location.pathname);
+                }
+            };
+
+            ga('send', 'pageview', {'hitCallback': removeUtms});
+        })();
+    }
+</script>
+
+
+
+    <script>
+LUX=(function(){var a=("undefined"!==typeof(LUX)&&"undefined"!==typeof(LUX.gaMarks)?LUX.gaMarks:[]);var d=("undefined"!==typeof(LUX)&&"undefined"!==typeof(LUX.gaMeasures)?LUX.gaMeasures:[]);var j="LUX_start";var k=window.performance;var l=("undefined"!==typeof(LUX)&&LUX.ns?LUX.ns:(Date.now?Date.now():+(new Date())));if(k&&k.timing&&k.timing.navigationStart){l=k.timing.navigationStart}function f(){if(k&&k.now){return k.now()}var o=Date.now?Date.now():+(new Date());return o-l}function b(n){if(k){if(k.mark){return k.mark(n)}else{if(k.webkitMark){return k.webkitMark(n)}}}a.push({name:n,entryType:"mark",startTime:f(),duration:0});return}function m(p,t,n){if("undefined"===typeof(t)&&h(j)){t=j}if(k){if(k.measure){if(t){if(n){return k.measure(p,t,n)}else{return k.measure(p,t)}}else{return k.measure(p)}}else{if(k.webkitMeasure){return k.webkitMeasure(p,t,n)}}}var r=0,o=f();if(t){var s=h(t);if(s){r=s.startTime}else{if(k&&k.timing&&k.timing[t]){r=k.timing[t]-k.timing.navigationStart}else{return}}}if(n){var q=h(n);if(q){o=q.startTime}else{if(k&&k.timing&&k.timing[n]){o=k.timing[n]-k.timing.navigationStart}else{return}}}d.push({name:p,entryType:"measure",startTime:r,duration:(o-r)});return}function h(n){return c(n,g())}function c(p,o){for(i=o.length-1;i>=0;i--){var n=o[i];if(p===n.name){return n}}return undefined}function g(){if(k){if(k.getEntriesByType){return k.getEntriesByType("mark")}else{if(k.webkitGetEntriesByType){return k.webkitGetEntriesByType("mark")}}}return a}return{mark:b,measure:m,gaMarks:a,gaMeasures:d}})();LUX.ns=(Date.now?Date.now():+(new Date()));LUX.ac=[];LUX.cmd=function(a){LUX.ac.push(a)};LUX.init=function(){LUX.cmd(["init"])};LUX.send=function(){LUX.cmd(["send"])};LUX.addData=function(a,b){LUX.cmd(["addData",a,b])};LUX_ae=[];window.addEventListener("error",function(a){LUX_ae.push(a)});LUX_al=[];if("function"===typeof(PerformanceObserver)){var LongTaskObserver=new PerformanceObserver(function(c){var b=c.getEntries();for(var a=0;a<b.length;a++){var d=b[a];LUX_al.push(d)}});try{LongTaskObserver.observe({entryTypes:["longtask"],buffered:true})}catch(e){}};
+</script>
+<script src="https://cdn.speedcurve.com/js/lux.js?id=108906238" async defer crossorigin="anonymous"></script>
+
+
+
+    <script async type="text/javascript" src="https://developer.mozilla.org/static/build/js/perf.654b849a6fd9.js" charset="utf-8"></script>
+
+    <!-- common social tags -->
+
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://developer.mozilla.org/static/img/opengraph-logo.72382e605ce3.png">
+    <meta property="og:site_name" content="MDN Web Docs">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://developer.mozilla.org/static/img/opengraph-logo.72382e605ce3.png">
+    <meta name="twitter:site" content="@MozDevNet">
+    <meta name="twitter:creator" content="@MozDevNet">
+    <link rel="search" type="application/opensearchdescription+xml" href="https://developer.mozilla.org/en-US/search/xml" title="MDN Web Docs">
+
+
+  <!-- third-generation iPad with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://developer.mozilla.org/static/img/favicon144.e7e21ca263ca.png">
+  <!-- iPhone with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://developer.mozilla.org/static/img/favicon114.d526f38b09c5.png">
+  <!-- first- and second-generation iPad: -->
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://developer.mozilla.org/static/img/favicon72.cc65d1d762a0.png">
+  <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+  <link rel="apple-touch-icon-precomposed" href="https://developer.mozilla.org/static/img/favicon57.de33179910ae.png">
+  <!-- basic favicon -->
+  <link rel="shortcut icon" href="https://developer.mozilla.org/static/img/favicon32.7f3da72dcea1.png">
+  <!--[if IE]>
+  <meta http-equiv="imagetoolbar" content="no">
+  <script type="text/javascript" src="https://developer.mozilla.org/static/build/js/html5shiv.ae1ac46eaf58.js" charset="utf-8"></script>
+  <![endif]-->
+
+
+  <link rel="dns-prefetch" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
+  <link rel="preconnect" href="https://interactive-examples.mdn.mozilla.net" pr="0.75" />
+
+  <link rel="alternate" type="application/json" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify$json">
+  <link rel="canonical" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" >
+
+
+  <link rel="alternate" hreflang="en" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" title="JSON.stringify()">
+
+
+      <link rel="alternate" hreflang="ar" href="https://developer.mozilla.org/ar/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" title="JSON.stringify()">
+
+      <link rel="alternate" hreflang="ca" href="https://developer.mozilla.org/ca/docs/Web/JavaScript/Referencia/Objectes_globals/JSON/stringify" title="JSON.stringify()">
+
+      <link rel="alternate" hreflang="de" href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" title="JSON.stringify()">
+
+      <link rel="alternate" hreflang="es" href="https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/JSON/stringify" title="JSON.stringify()">
+
+      <link rel="alternate" hreflang="fr" href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/JSON/stringify" title="JSON.stringify()">
+
+      <link rel="alternate" hreflang="it" href="https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" title="JSON.stringify()">
+
+      <link rel="alternate" hreflang="ja" href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" title="JSON.stringify()">
+
+      <link rel="alternate" hreflang="ko" href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" title="JSON.stringify()">
+
+      <link rel="alternate" hreflang="pt" href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" title="JSON.stringify()">
+
+      <link rel="alternate" hreflang="ru" href="https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" title="JSON.stringify()">
+
+      <link rel="alternate" hreflang="tr" href="https://developer.mozilla.org/tr/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" title="JSON.stringify()">
+
+      <link rel="alternate" hreflang="uk" href="https://developer.mozilla.org/uk/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" title="JSON.stringify()">
+
+      <link rel="alternate" hreflang="zh" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" title="JSON.stringify()">
+
+      <link rel="alternate" hreflang="zh-TW" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" title="JSON.stringify()">
+
+
+
+  <!-- document-specific social tags -->
+  <meta property="og:title" content="JSON.stringify()">
+  <meta property="og:url" content="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+  <meta name="twitter:url" content="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+  <meta name="twitter:title" content="JSON.stringify()">
+
+  <meta property="og:description" content="The JSON.stringify() method converts a JavaScript object or value to a JSON string, optionally replacing values if a replacer function is specified or optionally including only the specified properties if a replacer array is specified.">
+  <meta name="description" content="The JSON.stringify() method converts a JavaScript object or value to a JSON string, optionally replacing values if a replacer function is specified or optionally including only the specified properties if a replacer array is specified.">
+  <meta name="twitter:description" content="The JSON.stringify() method converts a JavaScript object or value to a JSON string, optionally replacing values if a replacer function is specified or optionally including only the specified properties if a replacer array is specified.">
+
+
+</head>
+<body data-slug="Web/JavaScript/Reference/Global_Objects/JSON/stringify" contextmenu="edit-history-menu" data-search-url="" class="document">
+
+  <script>
+    // make sure global mdn object exists
+    var mdn = window.mdn || {};
+
+    (function(win) {
+        'use strict';
+            (function(){
+  var FLAGS = {
+    'kumaediting': false,'page_move': false,'section_edit': false,'spam_checks_enabled': true,'spam_submissions_enabled': false,'spam_admin_override': false,'spam_spammer_override': false,'spam_testing_mode': false,'sg_task_completion': false,'contrib_beta': false,'recurring_payment_beta': false,'developer_needs': true,'bc-signals': false
+    },
+    SWITCHES = {
+    'welcome_email': true,'application_ACAO': true,'store_revision_ips': true,'foundation_callout': false,'helpful-survey-2': true,'wiki_spam_training': true,'registration_disabled': false
+    },
+    SAMPLES = {
+
+    };
+  window.waffle = {
+    "flag_is_active": function waffle_flag(flag_name) {
+
+      return !!FLAGS[flag_name];
+    },
+    "switch_is_active": function waffle_switch(switch_name) {
+
+      return !!SWITCHES[switch_name];
+    },
+    "sample_is_active": function waffle_sample(sample_name) {
+
+      return !!SAMPLES[sample_name];
+    },
+    "FLAGS": FLAGS,
+    "SWITCHES": SWITCHES,
+    "SAMPLES": SAMPLES
+  };
+})();
+
+
+            // This needs to be set before ckeditor.js loads
+            window.CKEDITOR_BASEPATH = 'https://developer.mozilla.org/static/js/libs/ckeditor4/build/ckeditor/';
+
+            // Site configuration
+            win.mdn.ckeditor = {};
+
+        win.mdn.features = {};
+        win.mdn.siteUrl = 'https://developer.mozilla.org';
+        win.mdn.wikiSiteUrl = 'https://wiki.developer.mozilla.org';
+        win.mdn.staticPath = 'https://developer.mozilla.org/static/';
+        win.mdn.wiki = {
+            autosuggestTitleUrl: '/en-US/docs/get-documents'
+        };
+        win.mdn.assets = {
+            css: {
+                'editor-content': ['https://developer.mozilla.org/static/build/styles/editor-content.11d6e91e6998.css',
+                ],
+
+                'wiki-compat-tables': ['https://developer.mozilla.org/static/build/styles/wiki-compat-tables.1d3c442ac0f3.css',]
+            },
+            js: {
+                'syntax-prism': ['https://developer.mozilla.org/static/build/js/syntax-prism.f016806edde4.js',],
+                'wiki-compat-tables': ['https://developer.mozilla.org/static/build/js/wiki-compat-tables.3a4ab2cc8ca1.js',],
+                'wiki-compat-signal': ['https://developer.mozilla.org/static/build/js/wiki-compat-signal.f03a10d93ede.js',]
+            }
+        };
+
+        win.mdn.notifications = [];
+
+
+
+        // interactive editor config
+        win.mdn.interactiveEditor = {
+            siteUrl: "https://developer.mozilla.org",
+            editorUrl: "https://interactive-examples.mdn.mozilla.net"
+        };
+        win.mdn.langCookieName = "django_language";
+
+    })(this);
+</script>
+
+    <ul id="nav-access">
+  <li><a href="#content" id="skip-main">Skip to main content</a></li>
+  <li><a id="skip-language" href="#language">Select language</a></li>
+  <li><a href="#q" id="skip-search">Skip to search</a></li>
+</ul>
+
+
+
+
+
+
+    <!-- Header -->
+    <header id="main-header" class="header-main">
+      <a href="/en-US/" class="logo">MDN Web Docs</a>
+      <div class="nav-toolbox-wrapper">
+        <nav id="main-nav" class="nav-main" role="navigation">
+    <ul>
+        <li class="nav-main-item">
+            <a href="/en-US/docs/Web">Technologies
+                <svg class="icon icon-caret-down" xmlns="http://www.w3.org/2000/svg" width="16" height="28" viewBox="0 0 16 28"><path d="M16 11a.99.99 0 0 1-.297.703l-7 7C8.516 18.89 8.265 19 8 19s-.516-.109-.703-.297l-7-7A.996.996 0 0 1 0 11c0-.547.453-1 1-1h14c.547 0 1 .453 1 1z"/></svg>
+            </a>
+            <div class="submenu js-submenu" id="nav-tech-submenu">
+                <div class="submenu-column">
+                  <ul>
+                    <li><a href="/en-US/docs/Web/HTML">HTML</a></li>
+                    <li><a href="/en-US/docs/Web/CSS">CSS</a></li>
+                    <li><a href="/en-US/docs/Web/JavaScript">JavaScript</a></li>
+                    <li><a href="/en-US/docs/Web/Guide/Graphics">Graphics</a></li>
+                    <li><a href="/en-US/docs/Web/HTTP">HTTP</a></li>
+                    <li><a href="/en-US/docs/Web/API">APIs / DOM</a></li>
+                    <li><a href="/en-US/docs/Mozilla/Add-ons/WebExtensions">Browser Extensions</a></li>
+                    <li><a href="/en-US/docs/Web/MathML">MathML</a></li>
+                  </ul>
+                </div>
+            </div>
+        </li>
+        <li class="nav-main-item">
+            <a href="/en-US/docs/Learn">References & Guides
+                <svg class="icon icon-caret-down" xmlns="http://www.w3.org/2000/svg" width="16" height="28" viewBox="0 0 16 28"><path d="M16 11a.99.99 0 0 1-.297.703l-7 7C8.516 18.89 8.265 19 8 19s-.516-.109-.703-.297l-7-7A.996.996 0 0 1 0 11c0-.547.453-1 1-1h14c.547 0 1 .453 1 1z"/></svg>
+            </a>
+            <div class="submenu js-submenu" id="nav-learn-submenu">
+                <div class="submenu-column">
+                  <ul>
+                    <li><a href="/en-US/docs/Learn">Learn web development</a></li>
+                    <li><a href="/en-US/docs/Web/Tutorials">Tutorials</a></li>
+                    <li><a href="/en-US/docs/Web/Reference">References</a></li>
+                    <li><a href="/en-US/docs/Web/Guide">Developer Guides</a></li>
+                    <li><a href="/en-US/docs/Web/Accessibility">Accessibility</a></li>
+                    <li><a href="/en-US/docs/Games">Game development</a></li>
+                    <li><a href="/en-US/docs/Web">...more docs</a></li>
+                  </ul>
+                </div>
+            </div>
+        </li>
+        <li class="nav-main-item">
+            <a href="/en-US/docs/MDN/Feedback">Feedback
+                <svg class="icon icon-caret-down" xmlns="http://www.w3.org/2000/svg" width="16" height="28" viewBox="0 0 16 28"><path d="M16 11a.99.99 0 0 1-.297.703l-7 7C8.516 18.89 8.265 19 8 19s-.516-.109-.703-.297l-7-7A.996.996 0 0 1 0 11c0-.547.453-1 1-1h14c.547 0 1 .453 1 1z"/></svg>
+            </a>
+            <div class="submenu js-submenu" id="nav-contact-submenu">
+              <div class="submenu-column">
+                <ul>
+                  <li>
+                      <a href="https://support.mozilla.org/">Get Firefox help
+                          <svg class="icon icon-external-link" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M22 14.5v5c0 2.484-2.016 4.5-4.5 4.5h-13A4.502 4.502 0 0 1 0 19.5v-13C0 4.016 2.016 2 4.5 2h11c.281 0 .5.219.5.5v1c0 .281-.219.5-.5.5h-11A2.507 2.507 0 0 0 2 6.5v13C2 20.875 3.125 22 4.5 22h13c1.375 0 2.5-1.125 2.5-2.5v-5c0-.281.219-.5.5-.5h1c.281 0 .5.219.5.5zM28 1v8c0 .547-.453 1-1 1a.99.99 0 0 1-.703-.297l-2.75-2.75L13.36 17.14c-.094.094-.234.156-.359.156s-.266-.063-.359-.156l-1.781-1.781c-.094-.094-.156-.234-.156-.359s.063-.266.156-.359L21.048 4.454l-2.75-2.75a.996.996 0 0 1-.297-.703c0-.547.453-1 1-1h8c.547 0 1 .453 1 1z"/></svg>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="https://stackoverflow.com/">Get web development help
+                          <svg class="icon icon-external-link" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M22 14.5v5c0 2.484-2.016 4.5-4.5 4.5h-13A4.502 4.502 0 0 1 0 19.5v-13C0 4.016 2.016 2 4.5 2h11c.281 0 .5.219.5.5v1c0 .281-.219.5-.5.5h-11A2.507 2.507 0 0 0 2 6.5v13C2 20.875 3.125 22 4.5 22h13c1.375 0 2.5-1.125 2.5-2.5v-5c0-.281.219-.5.5-.5h1c.281 0 .5.219.5.5zM28 1v8c0 .547-.453 1-1 1a.99.99 0 0 1-.703-.297l-2.75-2.75L13.36 17.14c-.094.094-.234.156-.359.156s-.266-.063-.359-.156l-1.781-1.781c-.094-.094-.156-.234-.156-.359s.063-.266.156-.359L21.048 4.454l-2.75-2.75a.996.996 0 0 1-.297-.703c0-.547.453-1 1-1h8c.547 0 1 .453 1 1z"/></svg>
+                      </a>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                      <a href="/en-US/docs/MDN/Community">Join the MDN community</a>
+                  </li>
+                  <li>
+                      <a target="_blank" rel="noopener" href="https://github.com/mdn/sprints/issues/new?template=issue-template.md&projects=mdn/sprints/2&labels=user-report&title=https%3A//developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">Report a content problem
+                          <svg class="icon icon-external-link" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M22 14.5v5c0 2.484-2.016 4.5-4.5 4.5h-13A4.502 4.502 0 0 1 0 19.5v-13C0 4.016 2.016 2 4.5 2h11c.281 0 .5.219.5.5v1c0 .281-.219.5-.5.5h-11A2.507 2.507 0 0 0 2 6.5v13C2 20.875 3.125 22 4.5 22h13c1.375 0 2.5-1.125 2.5-2.5v-5c0-.281.219-.5.5-.5h1c.281 0 .5.219.5.5zM28 1v8c0 .547-.453 1-1 1a.99.99 0 0 1-.703-.297l-2.75-2.75L13.36 17.14c-.094.094-.234.156-.359.156s-.266-.063-.359-.156l-1.781-1.781c-.094-.094-.156-.234-.156-.359s.063-.266.156-.359L21.048 4.454l-2.75-2.75a.996.996 0 0 1-.297-.703c0-.547.453-1 1-1h8c.547 0 1 .453 1 1z"/></svg>
+                      </a>
+                  </li>
+                  <li>
+                      <a target="_blank" rel="noopener" href="https://bugzilla.mozilla.org/form.mdn">Report a bug
+                          <svg class="icon icon-external-link" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M22 14.5v5c0 2.484-2.016 4.5-4.5 4.5h-13A4.502 4.502 0 0 1 0 19.5v-13C0 4.016 2.016 2 4.5 2h11c.281 0 .5.219.5.5v1c0 .281-.219.5-.5.5h-11A2.507 2.507 0 0 0 2 6.5v13C2 20.875 3.125 22 4.5 22h13c1.375 0 2.5-1.125 2.5-2.5v-5c0-.281.219-.5.5-.5h1c.281 0 .5.219.5.5zM28 1v8c0 .547-.453 1-1 1a.99.99 0 0 1-.703-.297l-2.75-2.75L13.36 17.14c-.094.094-.234.156-.359.156s-.266-.063-.359-.156l-1.781-1.781c-.094-.094-.156-.234-.156-.359s.063-.266.156-.359L21.048 4.454l-2.75-2.75a.996.996 0 0 1-.297-.703c0-.547.453-1 1-1h8c.547 0 1 .453 1 1z"/></svg>
+                      </a>
+                  </li>
+                </ul>
+              </div>
+          </div>
+      </li>
+  </ul>
+</nav>
+        <div id="toolbox" class="toolbox">
+  <ul>
+
+    <li class="nav-login"><div class="login">
+
+
+        <a href="/users/github/login/?next=%2Fen-US%2Fdocs%2FWeb%2FJavaScript%2FReference%2FGlobal_Objects%2FJSON%2Fstringify" class="login-link js-login-link" data-service="GitHub" rel="nofollow">
+            Sign in<svg class="icon icon-github" xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" aria-label="GitHub" role="img" focusable="false">
+    <title>Github</title>
+    <path d="M12 2c6.625 0 12 5.375 12 12 0 5.297-3.437 9.797-8.203 11.391-.609.109-.828-.266-.828-.578 0-.391.016-1.687.016-3.297 0-1.125-.375-1.844-.812-2.219 2.672-.297 5.484-1.313 5.484-5.922 0-1.313-.469-2.375-1.234-3.219.125-.313.531-1.531-.125-3.187-1-.313-3.297 1.234-3.297 1.234a11.28 11.28 0 0 0-6 0S6.704 6.656 5.704 6.969c-.656 1.656-.25 2.875-.125 3.187-.766.844-1.234 1.906-1.234 3.219 0 4.594 2.797 5.625 5.469 5.922-.344.313-.656.844-.766 1.609-.688.313-2.438.844-3.484-1-.656-1.141-1.844-1.234-1.844-1.234-1.172-.016-.078.734-.078.734.781.359 1.328 1.75 1.328 1.75.703 2.141 4.047 1.422 4.047 1.422 0 1 .016 1.937.016 2.234 0 .313-.219.688-.828.578C3.439 23.796.002 19.296.002 13.999c0-6.625 5.375-12 12-12zM4.547 19.234c.031-.063-.016-.141-.109-.187-.094-.031-.172-.016-.203.031-.031.063.016.141.109.187.078.047.172.031.203-.031zm.484.532c.063-.047.047-.156-.031-.25-.078-.078-.187-.109-.25-.047-.063.047-.047.156.031.25.078.078.187.109.25.047zm.469.703c.078-.063.078-.187 0-.297-.063-.109-.187-.156-.266-.094-.078.047-.078.172 0 .281s.203.156.266.109zm.656.656c.063-.063.031-.203-.063-.297-.109-.109-.25-.125-.313-.047-.078.063-.047.203.063.297.109.109.25.125.313.047zm.891.391c.031-.094-.063-.203-.203-.25-.125-.031-.266.016-.297.109s.063.203.203.234c.125.047.266 0 .297-.094zm.984.078c0-.109-.125-.187-.266-.172-.141 0-.25.078-.25.172 0 .109.109.187.266.172.141 0 .25-.078.25-.172zm.906-.156c-.016-.094-.141-.156-.281-.141-.141.031-.234.125-.219.234.016.094.141.156.281.125s.234-.125.219-.219z"/>
+</svg>
+        </a>
+
+</div></li>
+  </ul>
+</div>
+      </div>
+      <form id="nav-main-search" action="/en-US/search" method="get" role="search" class="nav-main-search">
+  <div class="search-wrap">
+    <label for="main-q" class="offscreen">Search</label>
+    <input type="search" id="main-q" name="q" placeholder="Search" data-value="" value="" aria-hidden="true" />
+    <span class="search-trigger">
+        <svg class="icon icon-search" xmlns="http://www.w3.org/2000/svg" width="26" height="28" viewBox="0 0 26 28" aria-hidden="true">
+    <path d="M18 13c0-3.859-3.141-7-7-7s-7 3.141-7 7 3.141 7 7 7 7-3.141 7-7zm8 13c0 1.094-.906 2-2 2a1.96 1.96 0 0 1-1.406-.594l-5.359-5.344a10.971 10.971 0 0 1-6.234 1.937c-6.078 0-11-4.922-11-11s4.922-11 11-11 11 4.922 11 11c0 2.219-.672 4.406-1.937 6.234l5.359 5.359c.359.359.578.875.578 1.406z"/>
+</svg>
+    </span>
+    <button type="submit" class="offscreen">Search</button>
+    <button type="button" id="close-header-search" class="close-header-search transparent">
+        <span class="offscreen">Close search</span>
+        <svg class="icon icon-close" xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 22 28" aria-hidden="true" role="img"><title></title><path d="M20.281 20.656c0 .391-.156.781-.438 1.062l-2.125 2.125c-.281.281-.672.438-1.062.438s-.781-.156-1.062-.438L11 19.249l-4.594 4.594c-.281.281-.672.438-1.062.438s-.781-.156-1.062-.438l-2.125-2.125c-.281-.281-.438-.672-.438-1.062s.156-.781.438-1.062L6.751 15l-4.594-4.594c-.281-.281-.438-.672-.438-1.062s.156-.781.438-1.062l2.125-2.125c.281-.281.672-.438 1.062-.438s.781.156 1.062.438L11 10.751l4.594-4.594c.281-.281.672-.438 1.062-.438s.781.156 1.062.438l2.125 2.125c.281.281.438.672.438 1.062s-.156.781-.438 1.062L15.249 15l4.594 4.594c.281.281.438.672.438 1.062z"/></svg>
+    </button>
+  </div>
+</form>
+    </header>
+
+  <!-- Content will go here -->
+  <main id="content">
+
+  <!-- heading -->
+  <div id="wiki-document-head" class="document-head">
+    <div class="center">
+      <div class="document-title">
+        <h1>JSON.stringify()</h1>
+      </div>
+
+      <!-- action buttons -->
+      <div class="document-actions">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul class="page-buttons">
+      <li>
+          <button id="languages-menu" class="transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false">
+              <svg class="icon icon-language" xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" aria-hidden="true">
+    <path d="M10.219 16.844c-.031.109-.797-.25-1-.328-.203-.094-1.125-.609-1.359-.766s-1.125-.891-1.234-.938a28.275 28.275 0 0 1-2.094 2.828c-.281.328-1.125 1.391-1.641 1.719-.078.047-.531.094-.594.063.25-.187.969-1.078 1.281-1.437.391-.453 2.25-3.047 2.562-3.641.328-.594 1.312-2.562 1.359-2.75-.156-.016-1.391.406-1.719.516-.313.094-1.172.297-1.234.344-.063.063-.016.25-.047.313s-.313.203-.484.234a1.647 1.647 0 0 1-.734 0c-.203-.047-.391-.25-.438-.328 0 0-.063-.094-.078-.359.187-.063.5-.078.844-.172s1.188-.344 1.641-.5 1.328-.484 1.594-.547c.281-.047.984-.516 1.359-.641s.641-.281.656-.203 0 .422-.016.516c-.016.078-.766 1.547-.875 1.781-.063.125-.5.953-1.203 2.047.25.109.781.328 1 .438.266.125 2.125.906 2.219.938s.266.75.234.875zM7.016 9.25c.047.266-.031.375-.063.438-.156.297-.547.5-.781.594s-.625.187-.938.187c-.141-.016-.422-.063-.766-.406-.187-.203-.328-.75-.266-.688s.516.125.719.078.688-.187.906-.25c.234-.078.703-.203.859-.219.156 0 .281.063.328.266zm10.906 2.016l.984 3.547-2.172-.656zM.609 23.766l10.844-3.625V4.016L.609 7.657v16.109zM20 18.813l1.594.484-2.828-10.266-1.563-.484-3.375 8.375 1.594.484.703-1.719 3.297 1.016zM12.141 3.781l8.953 2.875V.718zM17 24.453l2.469.203-.844 2.5L18 26.125c-1.266.812-2.828 1.437-4.312 1.687-.453.094-.969.187-1.422.187h-1.313c-1.656 0-4.672-.984-5.984-1.937-.094-.078-.125-.141-.125-.25 0-.172.125-.297.281-.297.141 0 .875.453 1.078.547 1.406.703 3.375 1.344 4.953 1.344 1.953 0 3.281-.25 5.063-1.016.516-.234.969-.531 1.453-.797zm7-16.859v16.859c-12.078-3.844-12.094-3.844-12.094-3.844C11.656 20.718.453 24.5.297 24.5a.3.3 0 0 1-.281-.203c0-.016-.016-.031-.016-.047V7.406c.016-.047.031-.125.063-.156.094-.109.219-.141.313-.172.047-.016 1-.328 2.328-.781v-6l8.719 3.094C11.532 3.36 21.251 0 21.392 0c.172 0 .313.125.313.328v6.531z"/>
+</svg>
+              <span>Languages</span>
+          </button>
+
+        <div class="submenu js-submenu" id="languages-menu-submenu">
+          <div class="submenu-column">
+            <ul id="translations">
+
+
+
+
+                  <li lang="ar"><bdi><a rel="internal" href="/ar/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" data-locale="ar" title="Arabic">عربي (ar)</a></bdi></li>
+
+                  <li lang="ca"><bdi><a rel="internal" href="/ca/docs/Web/JavaScript/Referencia/Objectes_globals/JSON/stringify" data-locale="ca" title="Catalan">Català (ca)</a></bdi></li>
+
+                  <li lang="de"><bdi><a rel="internal" href="/de/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" data-locale="de" title="German">Deutsch (de)</a></bdi></li>
+
+                  <li lang="es"><bdi><a rel="internal" href="/es/docs/Web/JavaScript/Referencia/Objetos_globales/JSON/stringify" data-locale="es" title="Spanish">Español (es)</a></bdi></li>
+
+                  <li lang="fr"><bdi><a rel="internal" href="/fr/docs/Web/JavaScript/Reference/Objets_globaux/JSON/stringify" data-locale="fr" title="French">Français (fr)</a></bdi></li>
+
+                  <li lang="it"><bdi><a rel="internal" href="/it/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" data-locale="it" title="Italian">Italiano (it)</a></bdi></li>
+
+                  <li lang="ja"><bdi><a rel="internal" href="/ja/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" data-locale="ja" title="Japanese">日本語 (ja)</a></bdi></li>
+
+                  <li lang="ko"><bdi><a rel="internal" href="/ko/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" data-locale="ko" title="Korean">한국어 (ko)</a></bdi></li>
+
+                  <li lang="pt-BR"><bdi><a rel="internal" href="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" data-locale="pt-BR" title="Portuguese (Brazilian)">Português (do Brasil) (pt-BR)</a></bdi></li>
+
+                  <li lang="ru"><bdi><a rel="internal" href="/ru/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" data-locale="ru" title="Russian">Русский (ru)</a></bdi></li>
+
+                  <li lang="tr"><bdi><a rel="internal" href="/tr/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" data-locale="tr" title="Turkish">Türkçe (tr)</a></bdi></li>
+
+                  <li lang="uk"><bdi><a rel="internal" href="/uk/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" data-locale="uk" title="Ukrainian">Українська (uk)</a></bdi></li>
+
+                  <li lang="zh-CN"><bdi><a rel="internal" href="/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" data-locale="zh-CN" title="Chinese (Simplified)">中文 (简体) (zh-CN)</a></bdi></li>
+
+                  <li lang="zh-TW"><bdi><a rel="internal" href="/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" data-locale="zh-TW" title="Chinese (Traditional)">正體中文 (繁體) (zh-TW)</a></bdi></li>
+
+
+
+
+                <li><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify$locales" rel="nofollow" id="translations-add">Add a translation</a></li>
+
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <li class="page-buttons-edit">
+          <a href="/en-US/users/signin?next=/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify%24edit" class="button neutral" id="edit-button" rel="nofollow">
+              <svg class="icon icon-pencil" xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" aria-hidden="true">
+    <path d="M5.672 24l1.422-1.422-3.672-3.672L2 20.328V22h2v2h1.672zm8.172-14.5a.329.329 0 0 0-.344-.344.368.368 0 0 0-.266.109l-8.469 8.469a.366.366 0 0 0-.109.266c0 .203.141.344.344.344a.368.368 0 0 0 .266-.109l8.469-8.469a.366.366 0 0 0 .109-.266zM13 6.5l6.5 6.5-13 13H0v-6.5zM23.672 8c0 .531-.219 1.047-.578 1.406L20.5 12 14 5.5l2.594-2.578c.359-.375.875-.594 1.406-.594s1.047.219 1.422.594l3.672 3.656c.359.375.578.891.578 1.422z"/>
+</svg>
+              Edit
+          </a>
+      </li>
+
+
+
+
+        <li class="page-buttons-advanced">
+            <button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false">
+                <svg class="icon icon-gear" xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" aria-hidden="true">
+    <path d="M16 14c0-2.203-1.797-4-4-4s-4 1.797-4 4 1.797 4 4 4 4-1.797 4-4zm8-1.703v3.469c0 .234-.187.516-.438.562l-2.891.438a8.86 8.86 0 0 1-.609 1.422c.531.766 1.094 1.453 1.672 2.156.094.109.156.25.156.391s-.047.25-.141.359c-.375.5-2.484 2.797-3.016 2.797a.795.795 0 0 1-.406-.141l-2.156-1.687a9.449 9.449 0 0 1-1.422.594c-.109.953-.203 1.969-.453 2.906a.573.573 0 0 1-.562.438h-3.469c-.281 0-.531-.203-.562-.469l-.438-2.875a9.194 9.194 0 0 1-1.406-.578l-2.203 1.672c-.109.094-.25.141-.391.141s-.281-.063-.391-.172c-.828-.75-1.922-1.719-2.578-2.625a.607.607 0 0 1 .016-.718c.531-.719 1.109-1.406 1.641-2.141a8.324 8.324 0 0 1-.641-1.547l-2.859-.422A.57.57 0 0 1 0 15.705v-3.469c0-.234.187-.516.422-.562l2.906-.438c.156-.5.359-.969.609-1.437a37.64 37.64 0 0 0-1.672-2.156c-.094-.109-.156-.234-.156-.375s.063-.25.141-.359c.375-.516 2.484-2.797 3.016-2.797.141 0 .281.063.406.156L7.828 5.94a9.449 9.449 0 0 1 1.422-.594c.109-.953.203-1.969.453-2.906a.573.573 0 0 1 .562-.438h3.469c.281 0 .531.203.562.469l.438 2.875c.484.156.953.344 1.406.578l2.219-1.672c.094-.094.234-.141.375-.141s.281.063.391.156c.828.766 1.922 1.734 2.578 2.656a.534.534 0 0 1 .109.344c0 .141-.047.25-.125.359-.531.719-1.109 1.406-1.641 2.141.266.5.484 1.016.641 1.531l2.859.438a.57.57 0 0 1 .453.562z"/>
+</svg>
+                <span>Advanced</span>
+            </button>
+            <div class="submenu js-submenu" id="advanced-menu-submenu">
+                <!-- this page -->
+                <div class="submenu-column">
+                    <div class="title">Advanced</div>
+                    <ul>
+                        <li><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify$history" rel="nofollow">History</a></li>
+
+
+
+
+
+
+
+                <li class="page-print"><a href="#" onclick="return window.print();">Print this article</a></li>
+            </ul>
+          </div>
+        </div>
+  </li></ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="toc" class="toc">
+    <div class="center">
+      <div class="toc-head">Jump to:</div>
+        <ol class="toc-links">
+          <li><a href="#Syntax" rel="internal">Syntax</a><li><a href="#Description" rel="internal">Description</a><li><a href="#Specifications" rel="internal">Specifications</a><li><a href="#Browser_compatibility" rel="internal">Browser compatibility</a><li><a href="#See_also" rel="internal">See also</a>
+        </ol>
+    </div>
+  </div>
+
+
+      <div class="center clear">
+
+
+    <div class="wiki-main-content" id="document-main"><div class="center">
+      <!-- start the main content container -->
+        <div id="wiki-column-container" class="wiki-left-present">
+
+          <!-- content row with three strips -->
+          <div class="column-container column-container-reverse">
+
+            <!-- center: main article content -->
+            <div id="wiki-content" class="column-main wiki-column text-content">
+
+
+
+
+
+
+
+
+
+
+
+              <!-- just the article content -->
+              <article id="wikiArticle">
+
+
+
+
+<p>The <strong><code>JSON.stringify()</code></strong> method converts a JavaScript object or value to a JSON string, optionally replacing values if a replacer function is specified or optionally including only the specified properties if a replacer array is specified.</p>
+
+<div><iframe class="interactive interactive-js" frameborder="0" height="250" src="https://interactive-examples.mdn.mozilla.net/pages/js/json-stringify.html" width="100%"></iframe></div>
+
+<p class="hidden">The source for this interactive example is stored in a GitHub repository. If you'd like to contribute to the interactive examples project, please clone <a class="external" href="https://github.com/mdn/interactive-examples" rel="noopener">https://github.com/mdn/interactive-examples</a> and send us a pull request.</p>
+
+<h2 id="Syntax">Syntax</h2>
+
+<pre class="syntaxbox"><code>JSON.stringify(<var>value</var>[, <var>replacer</var>[, <var>space</var>]])</code></pre>
+
+<h3 id="Parameters">Parameters</h3>
+
+<dl>
+ <dt><code>value</code></dt>
+ <dd>The value to convert to a JSON string.</dd>
+ <dt><code>replacer</code><span class="inlineIndicator optional optionalInline">Optional</span></dt>
+ <dd>A function that alters the behavior of the stringification process, or an array of <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" title="The String global object is a constructor for strings or a sequence of characters."><code>String</code></a> and <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" title="The Number JavaScript object is a wrapper object allowing you to work with numerical values. A Number object is created using the Number() constructor. A primitive type object number is created using the Number() function."><code>Number</code></a> objects that serve as a whitelist for selecting/filtering the properties of the value object to be included in the JSON string. If this value is <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/null" title="The value null represents the intentional absence of any object value. It is one of JavaScript's primitive values."><code>null</code></a> or not provided, all properties of the object are included in the resulting JSON string.</dd>
+ <dt><code>space</code><span class="inlineIndicator optional optionalInline">Optional</span></dt>
+ <dd>A <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" title="The String global object is a constructor for strings or a sequence of characters."><code>String</code></a> or <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" title="The Number JavaScript object is a wrapper object allowing you to work with numerical values. A Number object is created using the Number() constructor. A primitive type object number is created using the Number() function."><code>Number</code></a> object that's used to insert white space into the output JSON string for readability purposes.
+ <p>If this is a <code>Number</code>, it indicates the number of space characters to use as white space; this number is capped at 10 (if it is greater, the value is just <code>10</code>). Values less than 1 indicate that no space should be used.</p>
+
+ <p>If this is a <code>String</code>, the string (or the first 10 characters of the string, if it's longer than that) is used as white space. If this parameter is not provided (or is <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/null" title="The value null represents the intentional absence of any object value. It is one of JavaScript's primitive values."><code>null</code></a>), no white space is used.</p>
+ </dd>
+</dl>
+
+<h3 id="Return_value">Return value</h3>
+
+<p>A JSON string representing the given value.</p>
+
+<h3 id="Exceptions">Exceptions</h3>
+
+<ul>
+ <li>Throws a <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError" title="The TypeError object represents an error when a value is not of the expected type."><code>TypeError</code></a> ("cyclic object value") exception when a circular reference is found.</li>
+ <li>Throws a <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError" title="The TypeError object represents an error when a value is not of the expected type."><code>TypeError</code></a> ("BigInt value can't be serialized in JSON") when trying to stringify a <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt" title="BigInt is a built-in object that provides a way to represent whole numbers larger than 253, which is the largest number JavaScript can reliably represent with the Number primitive. BigInt can be used for arbitrarily large integers."><code>BigInt</code></a> value.</li>
+</ul>
+
+<h2 id="Description">Description</h2>
+
+<p><code>JSON.stringify()</code> converts a value to JSON notation representing it:</p>
+
+<ul>
+ <li>If the value has a <a href="#toJSON()_behavior">toJSON()</a> method, it's responsible to define what data will be serialized.</li>
+ <li><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" title="The Boolean object is an object wrapper for a boolean value."><code>Boolean</code></a>, <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" title="The Number JavaScript object is a wrapper object allowing you to work with numerical values. A Number object is created using the Number() constructor. A primitive type object number is created using the Number() function."><code>Number</code></a>, and <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" title="The String global object is a constructor for strings or a sequence of characters."><code>String</code></a> objects are converted to the corresponding primitive values during stringification, in accord with the traditional conversion semantics.</li>
+ <li>If <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined" title="The global undefined property represents the primitive value undefined. It is one of JavaScript's primitive types."><code>undefined</code></a>, a <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function" title="The Function constructor creates a new Function object. Calling the constructor directly can create functions dynamically, but suffers from security and similar (but far less significant) performance issues to eval. However, unlike eval, the Function constructor creates functions which execute in the global scope only."><code>Function</code></a>, or a <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol" title='The data type symbol is a primitive data type. The Symbol() function returns a value of type symbol, has static properties that expose several members of built-in objects, has static methods that expose the global symbol registry, and resembles a built-in object class but is incomplete as a constructor because it does not support the syntax "new Symbol()".'><code>Symbol</code></a> is encountered during conversion it is either omitted (when it is found in an object) or censored to <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/null" title="The value null represents the intentional absence of any object value. It is one of JavaScript's primitive values."><code>null</code></a> (when it is found in an array). <code>JSON.stringify()</code> can also just return <code>undefined</code> when passing in "pure" values like <code>JSON.stringify(function(){})</code> or <code>JSON.stringify(undefined)</code>.</li>
+ <li>All <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol" title='The data type symbol is a primitive data type. The Symbol() function returns a value of type symbol, has static properties that expose several members of built-in objects, has static methods that expose the global symbol registry, and resembles a built-in object class but is incomplete as a constructor because it does not support the syntax "new Symbol()".'><code>Symbol</code></a>-keyed properties will be completely ignored, even when using the <code>replacer</code> function.</li>
+ <li>The instances of <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" title="Creates a JavaScript Date instance that represents a single moment in time in a platform-independent format."><code>Date</code></a> implement the <code>toJSON()</code> function by returning a string (the same as <code>date.toISOString()</code>). Thus, they are treated as strings.</li>
+ <li>The numbers <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity" title="The global Infinity property is a numeric value representing infinity."><code>Infinity</code></a> and <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN" title="The global NaN property is a value representing Not-A-Number."><code>NaN</code></a>, as well as the value <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/null" title="The value null represents the intentional absence of any object value. It is one of JavaScript's primitive values."><code>null</code></a>, are all considered <code>null</code>.</li>
+ <li>All the other <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" title="The Object constructor creates an object wrapper."><code>Object</code></a> instances (including <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map" title="The Map object holds key-value pairs and remembers the original insertion order of the keys."><code>Map</code></a>, <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set" title="The Set object lets you store unique values of any type, whether primitive values or object references."><code>Set</code></a>, <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap" title="The WeakMap object is a collection of key/value pairs in which the keys are weakly referenced. The keys must be objects and the values can be arbitrary values."><code>WeakMap</code></a>, and <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet" title="The WeakSet object lets you store weakly held objects in a collection."><code>WeakSet</code></a>) will have only their enumerable properties serialized.</li>
+</ul>
+
+<pre class="brush: js">JSON.stringify({});                    // '{}'
+JSON.stringify(true);                  // 'true'
+JSON.stringify('foo');                 // '"foo"'
+JSON.stringify([1, 'false', false]);   // '[1,"false",false]'
+JSON.stringify([NaN, null, Infinity]); // '[null,null,null]'
+JSON.stringify({ x: 5 });              // '{"x":5}'
+
+JSON.stringify(new Date(2006, 0, 2, 15, 4, 5))
+// '"2006-01-02T15:04:05.000Z"'
+
+JSON.stringify({ x: 5, y: 6 });
+// '{"x":5,"y":6}'
+JSON.stringify([new Number(3), new String('false'), new Boolean(false)]);
+// '[3,"false",false]'
+
+// String-keyed array elements are not enumerable and make no sense in JSON
+let a = ['foo', 'bar'];
+a['baz'] = 'quux';      // a: [ 0: 'foo', 1: 'bar', baz: 'quux' ]
+JSON.stringify(a);
+// '["foo","bar"]'
+
+JSON.stringify({ x: [10, undefined, function(){}, Symbol('')] });
+// '{"x":[10,null,null,null]}'
+
+// Standard data structures
+JSON.stringify([new Set([1]), new Map([[1, 2]]), new WeakSet([{a: 1}]), new WeakMap([[{a: 1}, 2]])]);
+// '[{},{},{},{}]'
+
+// TypedArray
+JSON.stringify([new Int8Array([1]), new Int16Array([1]), new Int32Array([1])]);
+// '[{"0":1},{"0":1},{"0":1}]'
+JSON.stringify([new Uint8Array([1]), new Uint8ClampedArray([1]), new Uint16Array([1]), new Uint32Array([1])]);
+// '[{"0":1},{"0":1},{"0":1},{"0":1}]'
+JSON.stringify([new Float32Array([1]), new Float64Array([1])]);
+// '[{"0":1},{"0":1}]'
+
+// toJSON()
+JSON.stringify({ x: 5, y: 6, toJSON(){ return this.x + this.y; } });
+// '11'
+
+// Symbols:
+JSON.stringify({ x: undefined, y: Object, z: Symbol('') });
+// '{}'
+JSON.stringify({ [Symbol('foo')]: 'foo' });
+// '{}'
+JSON.stringify({ [Symbol.for('foo')]: 'foo' }, [Symbol.for('foo')]);
+// '{}'
+JSON.stringify({ [Symbol.for('foo')]: 'foo' }, function(k, v) {
+  if (typeof k === 'symbol') {
+    return 'a symbol';
+  }
+});
+// undefined
+
+// Non-enumerable properties:
+JSON.stringify( Object.create(null, { x: { value: 'x', enumerable: false }, y: { value: 'y', enumerable: true } }) );
+// '{"y":"y"}'
+
+
+// BigInt values throw
+JSON.stringify({x: 2n});
+// TypeError: BigInt value can't be serialized in JSON
+</pre>
+
+<h3 id="The_replacer_parameter"><a id="The replacer parameter" name="The replacer parameter"></a>The <code>replacer</code> parameter</h3>
+
+<p>The <code>replacer</code> parameter can be either a function or an array.</p>
+
+<p><strong>As a function</strong>, it takes two parameters: the <var>key</var> and the <var>value</var> being stringified. The object in which the key was found is provided as the replacer's <code>this</code> parameter.</p>
+
+<p>Initially, the <code>replacer</code> function is called with an empty string as key representing the object being stringified. It is then called for each property on the object or array being stringified.</p>
+
+<p>It should return the value that should be added to the JSON string, as follows:</p>
+
+<ul>
+ <li>If you return a <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number" title="The Number JavaScript object is a wrapper object allowing you to work with numerical values. A Number object is created using the Number() constructor. A primitive type object number is created using the Number() function."><code>Number</code></a>, the string corresponding to that number is used as the value for the property when added to the JSON string.</li>
+ <li>If you return a <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" title="The String global object is a constructor for strings or a sequence of characters."><code>String</code></a>, that string is used as the property's value when adding it to the JSON string.</li>
+ <li>If you return a <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean" title="The Boolean object is an object wrapper for a boolean value."><code>Boolean</code></a>, "true" or "false" is used as the property's value, as appropriate, when adding it to the JSON string.</li>
+ <li>If you return <code>null</code>, <code>null</code> will be added to the JSON string.</li>
+ <li>If you return any other object, the object is recursively stringified into the JSON string, calling the <code>replacer</code> function on each property, unless the object is a function, in which case nothing is added to the JSON string.</li>
+ <li>If you return <code>undefined</code>, the property is not included (i.e., filtered out) in the output JSON string.</li>
+</ul>
+
+<div class="blockIndicator note">
+<p><strong>Note:</strong> You cannot use the <code>replacer</code> function to remove values from an array. If you return <code>undefined</code> or a function then <code>null</code> is used instead.</p>
+</div>
+
+<div class="blockIndicator note">
+<p><strong>Note:</strong> If you wish the replacer to distinguish an initial object from a key with an empty string property (since both would give the empty string as key and potentially an object as value), you will have to keep track of the iteration count (if it is beyond the first iteration, it is a genuine empty string key).</p>
+</div>
+
+<h4 id="Example_replacer_as_a_function">Example <var>replacer</var>, as a function</h4>
+
+<pre class="brush: js">function replacer(key, value) {
+  // Filtering out properties
+  if (typeof value === 'string') {
+    return undefined;
+  }
+  return value;
+}
+
+var foo = {foundation: 'Mozilla', model: 'box', week: 45, transport: 'car', month: 7};
+JSON.stringify(foo, replacer);
+// '{"week":45,"month":7}'
+</pre>
+
+<h4 id="Example_replacer_as_an_array">Example <var>replacer</var>, as an array</h4>
+
+<p>If <code>replacer</code> is an array, the array's values indicate the names of the properties in the object that should be included in the resulting JSON string.</p>
+
+<pre class="brush: js">JSON.stringify(foo, ['week', 'month']);
+// '{"week":45,"month":7}', only keep "week" and "month" properties
+</pre>
+
+<h3 id="The_space_argument"><a id="The space argument" name="The space argument"></a>The <code>space</code> argument</h3>
+
+<p>The <code>space</code> argument may be used to control spacing in the final string.</p>
+
+<ul>
+ <li><strong>If it is a number</strong>, successive levels in the stringification will each be indented by this many space characters (up to 10).</li>
+ <li><strong>If it is a string</strong>, successive levels will be indented by this string (or the first ten characters of it).</li>
+</ul>
+
+<pre class="brush: js">JSON.stringify({ a: 2 }, null, ' ');
+// '{
+//  "a": 2
+// }'
+</pre>
+
+<p>Using a tab character mimics standard pretty-print appearance:</p>
+
+<pre class="brush: js">JSON.stringify({ uno: 1, dos: 2 }, null, '\t');
+// returns the string:
+// '{
+//     "uno": 1,
+//     "dos": 2
+// }'
+</pre>
+
+<h3 id="toJSON()_behavior"><code>toJSON()</code> behavior</h3>
+
+<p>If an object being stringified has a property named <code>toJSON</code> whose value is a function, then the <code>toJSON()</code> method customizes JSON stringification behavior: instead of the object being serialized, the value returned by the <code>toJSON()</code> method when called will be serialized. <code>JSON.stringify()</code> calls <code>toJSON</code> with one parameter:</p>
+
+<ul>
+ <li>if this object is a property value, the property name</li>
+ <li>if it is in an array, the index in the array, as a string</li>
+ <li>an empty string if <code>JSON.stringify()</code> was directly called on this object</li>
+</ul>
+
+<p>For example:</p>
+
+<pre class="brush: js">var obj = {
+    data: 'data',
+
+    toJSON(key){
+        if(key)
+            return `Now I am a nested object under key '${key}'`;
+
+        else
+            return this;
+    }
+};
+
+JSON.stringify(obj);
+// '{"data":"data"}'
+
+JSON.stringify({ obj })
+// '{"obj":"Now I am a nested object under key 'obj'"}'
+
+JSON.stringify([ obj ])
+// '["Now I am a nested object under key '0'"]'
+</pre>
+
+<h3 id="Issue_with_JSON.stringify()_when_serializing_circular_references">Issue with <code>JSON.stringify()</code> when serializing circular references</h3>
+
+<p>Note that since the <a class="external" href="https://www.json.org/" rel="noopener">JSON format</a> doesn't support object references (although an <a class="external" href="http://tools.ietf.org/html/draft-pbryan-zyp-json-ref-03" rel="noopener">IETF draft exists</a>), a <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError" title="The TypeError object represents an error when a value is not of the expected type."><code>TypeError</code></a> will be thrown if one attempts to encode an object with circular references.</p>
+
+<pre class="brush: js example-bad">const circularReference = {};
+circularReference.myself = circularReference;
+
+// Serializing circular references throws "TypeError: cyclic object value"
+JSON.stringify(circularReference);
+</pre>
+
+<p>To serialize circular references you can use a library that supports them (e.g. <a class="external" href="https://github.com/douglascrockford/JSON-js/blob/master/cycle.js" rel="noopener">cycle.js</a> by Douglas Crockford) or implement a solution by yourself, which will require finding and replacing (or removing) the cyclic references by serializable values.</p>
+
+<h3 id="Issue_with_plain_JSON.stringify_for_use_as_JavaScript">Issue with plain <code>JSON.stringify</code> for use as JavaScript</h3>
+
+<p>Historically, JSON was <a class="external" href="http://timelessrepo.com/json-isnt-a-javascript-subset" rel="noopener">not a completely strict subset of JavaScript</a>.  The literal code points U+2028 LINE SEPARATOR and U+2029 PARAGRAPH SEPARATOR could appear literally in string literals and property names in JSON text.  But they could not appear literally in similar context in JavaScript text -- only using Unicode escapes as <code>\u2028</code> and <code>\u2029</code>.  This recently changed: now both code points may appear literally in strings in JSON and JavaScript both.</p>
+
+<p>Therefore, if compatibility with older JavaScript engines is required, it is perilous to directly substitute the string returned by <code>JSON.stringify</code> into a JavaScript string to be passed to <code>eval</code> or <code>new Function</code> or as part of a <a class="external" href="https://en.wikipedia.org/wiki/JSONP" rel="noopener">JSONP</a> URL, and the following utility can be used:</p>
+
+<pre class="brush: js">function jsFriendlyJSONStringify (s) {
+    return JSON.stringify(s).
+        replace(/\u2028/g, '\\u2028').
+        replace(/\u2029/g, '\\u2029');
+}
+
+var s = {
+    a: String.fromCharCode(0x2028),
+    b: String.fromCharCode(0x2029)
+};
+try {
+    eval('(' + JSON.stringify(s) + ')');
+} catch (e) {
+    console.log(e); // "SyntaxError: unterminated string literal"
+}
+
+// No need for a catch
+eval('(' + jsFriendlyJSONStringify(s) + ')');
+
+// console.log in Firefox unescapes the Unicode if
+//   logged to console, so we use alert
+alert(jsFriendlyJSONStringify(s)); // {"a":"\u2028","b":"\u2029"}
+</pre>
+
+<div class="blockIndicator note">
+<p><strong>Note</strong>: Properties of non-array objects are not guaranteed to be stringified in any particular order. Do not rely on ordering of properties within the same object within the stringification.</p>
+</div>
+
+<pre class="brush: js">var a = JSON.stringify({ foo: "bar", baz: "quux" })
+//'{"foo":"bar","baz":"quux"}'
+var b = JSON.stringify({ baz: "quux", foo: "bar" })
+//'{"baz":"quux","foo":"bar"}'
+console.log(a !== b) // true
+
+// some memoization functions use JSON.stringify to serialize arguments,
+// which may cause a cache miss when encountering the same object like above
+</pre>
+
+<h3 id="Example_of_using_JSON.stringify()_with_localStorage">Example of using <code>JSON.stringify()</code> with <code>localStorage</code></h3>
+
+<p>In a case where you want to store an object created by your user and allowing it to be restored even after the browser has been closed, the following example is a model for the applicability of <code>JSON.stringify()</code>:</p>
+
+<pre class="brush: js">// Creating an example of JSON
+var session = {
+  'screens': [],
+  'state': true
+};
+session.screens.push({ 'name': 'screenA', 'width': 450, 'height': 250 });
+session.screens.push({ 'name': 'screenB', 'width': 650, 'height': 350 });
+session.screens.push({ 'name': 'screenC', 'width': 750, 'height': 120 });
+session.screens.push({ 'name': 'screenD', 'width': 250, 'height': 60 });
+session.screens.push({ 'name': 'screenE', 'width': 390, 'height': 120 });
+session.screens.push({ 'name': 'screenF', 'width': 1240, 'height': 650 });
+
+// Converting the JSON string with JSON.stringify()
+// then saving with localStorage in the name of session
+localStorage.setItem('session', JSON.stringify(session));
+
+// Example of how to transform the String generated through
+// JSON.stringify() and saved in localStorage in JSON object again
+var restoredSession = JSON.parse(localStorage.getItem('session'));
+
+// Now restoredSession variable contains the object that was saved
+// in localStorage
+console.log(restoredSession);
+</pre>
+
+<h3 id="Well-formed_JSON.stringify()">Well-formed <code>JSON.stringify()</code></h3>
+
+<p>Engines implementing the <a class="external" href="https://github.com/tc39/proposal-well-formed-stringify" rel="noopener">well-formed JSON.stringify specification</a> will stringify lone surrogates -- any code point from U+D800 to U+DFFF -- using Unicode escape sequences rather than literally.  Before this change <code>JSON.stringify</code> would output lone surrogates if the input contained any lone surrogates; such strings could not be encoded in valid UTF-8 or UTF-16:</p>
+
+<pre class="brush: js; no-line-numbers">JSON.stringify("\uD800"); // '"�"'</pre>
+
+<p>But with this change <code>JSON.stringify</code> represents lone surrogates using JSON escape sequences that <em>can</em> be encoded in valid UTF-8 or UTF-16:</p>
+
+<pre class="brush: js; no-line-numbers">JSON.stringify("\uD800"); // '"\\ud800"'</pre>
+
+<p>This change should be backwards-compatible as long as you pass the result of <code>JSON.stringify</code> to APIs such as <code>JSON.parse</code> that will accept any valid JSON text, because they will treat Unicode escapes of lone surrogates as identical to the lone surrogates themselves.  <em>Only</em> if you are directly interpreting the result of <code>JSON.stringify</code> do you need to carefully handle <code>JSON.stringify</code>'s two possible encodings of these code points.</p>
+
+<h2 id="Specifications">Specifications</h2>
+
+<table class="standard-table">
+ <tbody>
+  <tr>
+   <th scope="col">Specification</th>
+   <th scope="col">Status</th>
+   <th scope="col">Comment</th>
+  </tr>
+  <tr>
+   <td><a class="external" href="https://www.ecma-international.org/ecma-262/5.1/#sec-15.12.3" hreflang="en" lang="en" rel="noopener">ECMAScript 5.1 (ECMA-262)<br><small lang="en-US">The definition of 'JSON.stringify' in that specification.</small></a></td>
+   <td><span class="spec-Standard">Standard</span></td>
+   <td>Initial definition. Implemented in JavaScript 1.7.</td>
+  </tr>
+  <tr>
+   <td><a class="external" href="https://www.ecma-international.org/ecma-262/6.0/#sec-json.stringify" hreflang="en" lang="en" rel="noopener">ECMAScript 2015 (6th Edition, ECMA-262)<br><small lang="en-US">The definition of 'JSON.stringify' in that specification.</small></a></td>
+   <td><span class="spec-Standard">Standard</span></td>
+   <td></td>
+  </tr>
+  <tr>
+   <td><a class="external" href="https://tc39.es/ecma262/#sec-json.stringify" hreflang="en" lang="en" rel="noopener">ECMAScript Latest Draft (ECMA-262)<br><small lang="en-US">The definition of 'JSON.stringify' in that specification.</small></a></td>
+   <td><span class="spec-Draft">Draft</span></td>
+   <td></td>
+  </tr>
+ </tbody>
+</table>
+
+<h2 id="Browser_compatibility">Browser compatibility</h2>
+
+<div>
+<div class="hidden">The compatibility table on this page is generated from structured data. If you'd like to contribute to the data, please check out <a class="external" href="https://github.com/mdn/browser-compat-data" rel="noopener">https://github.com/mdn/browser-compat-data</a> and send us a pull request.</div>
+
+<div class="bc-data"><a class="bc-github-link external" href="https://github.com/mdn/browser-compat-data" rel="noopener">Update compatibility data on GitHub</a><table class="bc-table bc-table-js"><thead><tr class="bc-platforms"><td></td><th class="bc-platform-desktop" colspan="6"><span>Desktop</span></th><th class="bc-platform-mobile" colspan="6"><span>Mobile</span></th><th class="bc-platform-server" colspan="1"><span>Server</span></th></tr><tr class="bc-browsers"><td></td><th class="bc-browser-chrome"><span class="bc-head-txt-label bc-head-icon-chrome">Chrome</span></th><th class="bc-browser-edge"><span class="bc-head-txt-label bc-head-icon-edge">Edge</span></th><th class="bc-browser-firefox"><span class="bc-head-txt-label bc-head-icon-firefox">Firefox</span></th><th class="bc-browser-ie"><span class="bc-head-txt-label bc-head-icon-ie">Internet Explorer</span></th><th class="bc-browser-opera"><span class="bc-head-txt-label bc-head-icon-opera">Opera</span></th><th class="bc-browser-safari"><span class="bc-head-txt-label bc-head-icon-safari">Safari</span></th><th class="bc-browser-webview_android"><span class="bc-head-txt-label bc-head-icon-webview_android">Android webview</span></th><th class="bc-browser-chrome_android"><span class="bc-head-txt-label bc-head-icon-chrome_android">Chrome for Android</span></th><th class="bc-browser-firefox_android"><span class="bc-head-txt-label bc-head-icon-firefox_android">Firefox for Android</span></th><th class="bc-browser-opera_android"><span class="bc-head-txt-label bc-head-icon-opera_android">Opera for Android</span></th><th class="bc-browser-safari_ios"><span class="bc-head-txt-label bc-head-icon-safari_ios">Safari on iOS</span></th><th class="bc-browser-samsunginternet_android"><span class="bc-head-txt-label bc-head-icon-samsunginternet_android">Samsung Internet</span></th><th class="bc-browser-nodejs"><span class="bc-head-txt-label bc-head-icon-nodejs">Node.js</span></th></tr></thead><tbody><tr><th scope="row"><code>stringify</code></th><td class="bc-supports-yes bc-browser-chrome"><span class="bc-browser-name">Chrome</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              Yes</td><td class="bc-supports-yes bc-browser-edge"><span class="bc-browser-name">Edge</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              12</td><td class="bc-supports-yes bc-browser-firefox"><span class="bc-browser-name">Firefox</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              3.5</td><td class="bc-supports-yes bc-browser-ie"><span class="bc-browser-name">IE</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              8</td><td class="bc-supports-yes bc-browser-opera"><span class="bc-browser-name">Opera</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              10.5</td><td class="bc-supports-yes bc-browser-safari"><span class="bc-browser-name">Safari</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              4</td><td class="bc-supports-yes bc-browser-webview_android"><span class="bc-browser-name">WebView Android</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              Yes</td><td class="bc-supports-yes bc-browser-chrome_android"><span class="bc-browser-name">Chrome Android</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              Yes</td><td class="bc-supports-yes bc-browser-firefox_android"><span class="bc-browser-name">Firefox Android</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              4</td><td class="bc-supports-yes bc-browser-opera_android"><span class="bc-browser-name">Opera Android</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              Yes</td><td class="bc-supports-yes bc-browser-safari_ios"><span class="bc-browser-name">Safari iOS</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              Yes</td><td class="bc-supports-yes bc-browser-samsunginternet_android"><span class="bc-browser-name">Samsung Internet Android</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              Yes</td><td class="bc-supports-yes bc-browser-nodejs"><span class="bc-browser-name">nodejs</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              Yes</td></tr><tr><th scope="row"><a class="external" href="https://github.com/tc39/proposal-well-formed-stringify" rel="noopener">Well-formed JSON.stringify</a></th><td class="bc-supports-yes bc-browser-chrome"><span class="bc-browser-name">Chrome</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              72</td><td class="bc-supports-no bc-browser-edge"><span class="bc-browser-name">Edge</span><abbr class="bc-level-no only-icon" title="No support">
+                <span>No support</span>
+              </abbr>
+              No</td><td class="bc-supports-yes bc-browser-firefox"><span class="bc-browser-name">Firefox</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              64</td><td class="bc-supports-no bc-browser-ie"><span class="bc-browser-name">IE</span><abbr class="bc-level-no only-icon" title="No support">
+                <span>No support</span>
+              </abbr>
+              No</td><td class="bc-supports-yes bc-browser-opera"><span class="bc-browser-name">Opera</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              60</td><td class="bc-supports-yes bc-browser-safari"><span class="bc-browser-name">Safari</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              12.1</td><td class="bc-supports-yes bc-browser-webview_android"><span class="bc-browser-name">WebView Android</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              72</td><td class="bc-supports-yes bc-browser-chrome_android"><span class="bc-browser-name">Chrome Android</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              72</td><td class="bc-supports-yes bc-browser-firefox_android"><span class="bc-browser-name">Firefox Android</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              64</td><td class="bc-supports-yes bc-browser-opera_android"><span class="bc-browser-name">Opera Android</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              50</td><td class="bc-supports-yes bc-browser-safari_ios"><span class="bc-browser-name">Safari iOS</span><abbr class="bc-level-yes only-icon" title="Full support">
+                <span>Full support</span>
+              </abbr>
+              12.2</td><td class="bc-supports-no bc-browser-samsunginternet_android"><span class="bc-browser-name">Samsung Internet Android</span><abbr class="bc-level-no only-icon" title="No support">
+                <span>No support</span>
+              </abbr>
+              No</td><td class="bc-supports-no bc-browser-nodejs"><span class="bc-browser-name">nodejs</span><abbr class="bc-level-no only-icon" title="No support">
+                <span>No support</span>
+              </abbr>
+              No</td></tr></tbody></table><section class="bc-legend" id="sect1"><h3 class="offscreen" id="Legend">Legend</h3><dl><dt><span class="bc-supports-yes bc-supports">
+                <abbr class="bc-level bc-level-yes only-icon" title="Full support">
+                 <span>Full support</span>
+
+                </abbr></span></dt><dd>Full support</dd><dt><span class="bc-supports-no bc-supports">
+                <abbr class="bc-level bc-level-no only-icon" title="No support">
+                 <span>No support</span>
+
+                </abbr></span></dt><dd>No support</dd></dl></section></div>
+</div>
+
+<h2 id="See_also">See also</h2>
+
+<ul>
+ <li><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse" title="The JSON.parse() method parses a JSON string, constructing the JavaScript value or object described by the string. An optional reviver function can be provided to perform a transformation on the resulting object before it is returned."><code>JSON.parse()</code></a></li>
+ <li><a class="external" href="https://github.com/douglascrockford/JSON-js/blob/master/cycle.js" rel="noopener">cycle.js</a> – Introduces two functions: <code>JSON.decycle</code> and <code>JSON.retrocycle</code>. These allow encoding and decoding of cyclical structures and DAGs into an extended and retrocompatible JSON format.</li>
+</ul>
+
+
+              </article>
+
+              <!-- contributors -->
+              <div class="wiki-block contributors">
+                <h2 class="offscreen">Document Tags and Contributors</h2>
+
+
+  <div class="tag-attach-list contributors-sub">
+    <svg class="icon icon-tags" xmlns="http://www.w3.org/2000/svg" width="30" height="28" viewBox="0 0 30 28" aria-hidden="true">
+    <path d="M7 7c0-1.109-.891-2-2-2s-2 .891-2 2 .891 2 2 2 2-.891 2-2zm16.672 9c0 .531-.219 1.047-.578 1.406l-7.672 7.688c-.375.359-.891.578-1.422.578s-1.047-.219-1.406-.578L1.422 13.906C.625 13.125 0 11.609 0 10.5V4c0-1.094.906-2 2-2h6.5c1.109 0 2.625.625 3.422 1.422l11.172 11.156c.359.375.578.891.578 1.422zm6 0c0 .531-.219 1.047-.578 1.406l-7.672 7.688a2.08 2.08 0 0 1-1.422.578c-.812 0-1.219-.375-1.75-.922l7.344-7.344c.359-.359.578-.875.578-1.406s-.219-1.047-.578-1.422L14.422 3.422C13.625 2.625 12.11 2 11 2h3.5c1.109 0 2.625.625 3.422 1.422l11.172 11.156c.359.375.578.891.578 1.422z"/>
+</svg>
+    <strong>Tags:</strong>&nbsp;
+    <ul class="tags tags-small">
+
+        <li><a href="/en-US/docs/tag/JavaScript" rel="nofollow">JavaScript</a></li>
+
+        <li><a href="/en-US/docs/tag/JSON" rel="nofollow">JSON</a></li>
+
+        <li><a href="/en-US/docs/tag/Method" rel="nofollow">Method</a></li>
+
+        <li><a href="/en-US/docs/tag/Objects" rel="nofollow">Objects</a></li>
+
+        <li><a href="/en-US/docs/tag/Reference" rel="nofollow">Reference</a></li>
+
+        <li><a href="/en-US/docs/tag/stringify" rel="nofollow">stringify</a></li>
+
+    </ul>
+  </div>
+
+
+
+                  <div class="contributors-sub">
+                    <svg class="icon icon-group" xmlns="http://www.w3.org/2000/svg" width="30" height="28" viewBox="0 0 30 28" aria-hidden="true">
+    <path d="M9.266 14a5.532 5.532 0 0 0-4.141 2H3.031C1.468 16 0 15.25 0 13.516 0 12.25-.047 8 1.937 8c.328 0 1.953 1.328 4.062 1.328.719 0 1.406-.125 2.078-.359A7.624 7.624 0 0 0 7.999 10c0 1.422.453 2.828 1.266 4zM26 23.953C26 26.484 24.328 28 21.828 28H8.172C5.672 28 4 26.484 4 23.953 4 20.422 4.828 15 9.406 15c.531 0 2.469 2.172 5.594 2.172S20.063 15 20.594 15C25.172 15 26 20.422 26 23.953zM10 4c0 2.203-1.797 4-4 4S2 6.203 2 4s1.797-4 4-4 4 1.797 4 4zm11 6c0 3.313-2.688 6-6 6s-6-2.688-6-6 2.688-6 6-6 6 2.688 6 6zm9 3.516C30 15.25 28.531 16 26.969 16h-2.094a5.532 5.532 0 0 0-4.141-2A7.066 7.066 0 0 0 22 10a7.6 7.6 0 0 0-.078-1.031A6.258 6.258 0 0 0 24 9.328C26.109 9.328 27.734 8 28.062 8c1.984 0 1.937 4.25 1.937 5.516zM28 4c0 2.203-1.797 4-4 4s-4-1.797-4-4 1.797-4 4-4 4 1.797 4 4z"/>
+</svg>
+                    <strong>Contributors to this page:</strong>
+
+        <a href="/en-US/profiles/fscholz" rel="nofollow">fscholz</a>,
+
+        <a href="/en-US/profiles/dong-jy" rel="nofollow">dong-jy</a>,
+
+        <a href="/en-US/profiles/mdnwebdocs-bot" rel="nofollow">mdnwebdocs-bot</a>,
+
+        <a href="/en-US/profiles/zeta12ti" rel="nofollow">zeta12ti</a>,
+
+        <a href="/en-US/profiles/Waldo" rel="nofollow">Waldo</a>,
+
+        <a href="/en-US/profiles/ExE-Boss" rel="nofollow">ExE-Boss</a>,
+
+        <a href="/en-US/profiles/pre1ude" rel="nofollow">pre1ude</a>,
+
+        <a href="/en-US/profiles/johnmorseytest007" rel="nofollow">johnmorseytest007</a>,
+
+        <a href="/en-US/profiles/pepkin88" rel="nofollow">pepkin88</a>,
+
+        <a href="/en-US/profiles/ross-u" rel="nofollow">ross-u</a>,
+
+        <a href="/en-US/profiles/Zearin_Galaurum" rel="nofollow">Zearin_Galaurum</a>,
+
+        <a href="/en-US/profiles/bmarkovic" rel="nofollow">bmarkovic</a>,
+
+        <a href="/en-US/profiles/Sheppy" rel="nofollow">Sheppy</a>,
+
+        <a href="/en-US/profiles/Brettz9" rel="nofollow">Brettz9</a>,
+
+        <a href="/en-US/profiles/paury" rel="nofollow">paury</a>,
+
+        <a href="/en-US/profiles/jonasraoni" rel="nofollow">jonasraoni</a>,
+
+        <a href="/en-US/profiles/SphinxKnight" rel="nofollow">SphinxKnight</a>,
+
+        <a href="/en-US/profiles/shripal7" rel="nofollow">shripal7</a>,
+
+        <a href="/en-US/profiles/Konrud" rel="nofollow">Konrud</a>,
+
+        <a href="/en-US/profiles/wbamberg" rel="nofollow">wbamberg</a>,
+
+        <a href="/en-US/profiles/schalkneethling" rel="nofollow">schalkneethling</a>,
+
+        <a href="/en-US/profiles/Jedipedia" rel="nofollow">Jedipedia</a>,
+
+        <a href="/en-US/profiles/wisgh" rel="nofollow">wisgh</a>,
+
+        <a href="/en-US/profiles/kubijo" rel="nofollow">kubijo</a>,
+
+        <a href="/en-US/profiles/autra" rel="nofollow">autra</a>,
+
+        <a href="/en-US/profiles/vandanasamudrala" rel="nofollow">vandanasamudrala</a>,
+
+        <a href="/en-US/profiles/jacobp100" rel="nofollow">jacobp100</a>,
+
+        <a href="/en-US/profiles/jameshkramer" rel="nofollow">jameshkramer</a>,
+
+        <a href="/en-US/profiles/nmve" rel="nofollow">nmve</a>,
+
+        <a href="/en-US/profiles/wbhob" rel="nofollow">wbhob</a>,
+
+        <a href="/en-US/profiles/madarche" rel="nofollow">madarche</a>,
+
+        <a href="/en-US/profiles/matthung0807" rel="nofollow">matthung0807</a>,
+
+        <a href="/en-US/profiles/eduardoboucas" rel="nofollow">eduardoboucas</a>,
+
+        <a href="/en-US/profiles/whinc" rel="nofollow">whinc</a>,
+
+        <a href="/en-US/profiles/doomsterinc" rel="nofollow">doomsterinc</a>,
+
+        <a href="/en-US/profiles/nickleus" rel="nofollow">nickleus</a>,
+
+        <a href="/en-US/profiles/noscripter" rel="nofollow">noscripter</a>,
+
+        <a href="/en-US/profiles/andfaulkner" rel="nofollow">andfaulkner</a>,
+
+        <a href="/en-US/profiles/kevinburkeshyp" rel="nofollow">kevinburkeshyp</a>,
+
+        <a href="/en-US/profiles/kevinburke" rel="nofollow">kevinburke</a>,
+
+        <a href="/en-US/profiles/chris.johnson" rel="nofollow">chris.johnson</a>,
+
+        <a href="/en-US/profiles/Mingun" rel="nofollow">Mingun</a>,
+
+        <a href="/en-US/profiles/ziyunfei" rel="nofollow">ziyunfei</a>,
+
+        <a href="/en-US/profiles/mlissner" rel="nofollow">mlissner</a>,
+
+        <a href="/en-US/profiles/miller.augusto" rel="nofollow">miller.augusto</a>,
+
+        <a href="/en-US/profiles/georgebatalinski" rel="nofollow">georgebatalinski</a>,
+
+        <a href="/en-US/profiles/stevemao" rel="nofollow">stevemao</a>,
+
+        <a href="/en-US/profiles/miller_augusto" rel="nofollow">miller_augusto</a>,
+
+        <a href="/en-US/profiles/enaeseth" rel="nofollow">enaeseth</a>,
+
+        <a href="/en-US/profiles/paul.irish" rel="nofollow">paul.irish</a>,
+
+        <a href="/en-US/profiles/Nickolay" rel="nofollow">Nickolay</a>,
+
+        <a href="/en-US/profiles/evilpie" rel="nofollow">evilpie</a>
+
+                  </div>
+
+
+
+                  <div class="contributors-sub">
+                    <svg class="icon icon-clock" xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" aria-hidden="true">
+    <path d="M14 8.5v7c0 .281-.219.5-.5.5h-5a.494.494 0 0 1-.5-.5v-1c0-.281.219-.5.5-.5H12V8.5c0-.281.219-.5.5-.5h1c.281 0 .5.219.5.5zm6.5 5.5c0-4.688-3.813-8.5-8.5-8.5S3.5 9.313 3.5 14s3.813 8.5 8.5 8.5 8.5-3.813 8.5-8.5zm3.5 0c0 6.625-5.375 12-12 12S0 20.625 0 14 5.375 2 12 2s12 5.375 12 12z"/>
+</svg>
+                    <strong>Last updated by:</strong>
+                    <a href="/en-US/profiles/fscholz" rel="nofollow">fscholz</a>,
+                    <time datetime="2019-07-16T06:33:47.091523-07:00">Jul 16, 2019, 6:33:47 AM</time>
+                  </div>
+
+              </div>
+            </div>
+
+
+              <!-- quick links and approvals strip -->
+              <div id="wiki-left" class="column-strip wiki-column">
+
+                <!-- crumbs -->
+
+
+    <nav class="crumbs" role="navigation">
+      <ol typeof="BreadcrumbList" vocab="https://schema.org/" aria-label="breadcrumbs">
+
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="/en-US/docs/Web" property="item" typeof="WebPage">
+              <span property="name">Web technology for developers</span>
+            </a>
+            <meta property="position" content="1">
+          </li>
+
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="/en-US/docs/Web/JavaScript" property="item" typeof="WebPage">
+              <span property="name">JavaScript</span>
+            </a>
+            <meta property="position" content="2">
+          </li>
+
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="/en-US/docs/Web/JavaScript/Reference" property="item" typeof="WebPage">
+              <span property="name">JavaScript reference</span>
+            </a>
+            <meta property="position" content="3">
+          </li>
+
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects" property="item" typeof="WebPage">
+              <span property="name">Standard built-in objects</span>
+            </a>
+            <meta property="position" content="4">
+          </li>
+
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON" property="item" typeof="WebPage">
+              <span property="name">JSON</span>
+            </a>
+            <meta property="position" content="5">
+          </li>
+
+        <li property="itemListElement" typeof="ListItem" class="crumb">
+          <span property="name" aria-current="page">JSON.stringify()</span>
+        </li>
+      </ol>
+    </nav>
+
+
+
+                  <!-- quick links -->
+
+  <div class="quick-links" id="quick-links">
+    <div class="quick-links-head">Related Topics</div>
+    <ol><li><strong><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects">Standard built-in objects</a></strong></li><li><strong><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON"><code>JSON</code></a></strong></li><li data-default-state="open"><a href="#"><strong>Methods</strong></a><ol><li><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse" title="The JSON.parse() method parses a JSON string, constructing the JavaScript value or object described by the string. An optional reviver function can be provided to perform a transformation on the resulting object before it is returned."><code>JSON.parse()</code></a></li><li><em><code>JSON.stringify()</code></em></li></ol></li><li><strong>Inheritance:</strong></li><li><strong><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object"><code>Object</code></a></strong></li><li><a href="#"><strong>Properties</strong></a><ol><li><span class="sidebar-icon"><span class="icon-only-inline" title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><span class="sidebar-icon"><span class="icon-only-inline" title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/count" title="The __count__ property used to store the count of enumerable properties on the object, but it has been removed."><code>Object.prototype.__count__</code></a></s></li><li><span class="sidebar-icon"><span class="icon-only-inline" title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><span class="sidebar-icon"><span class="icon-only-inline" title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/noSuchMethod" title="The __noSuchMethod__ property used to reference a function to be executed when a non-existent method is called on an object, but this function is no longer available."><code>Object.prototype.__noSuchMethod__</code></a></s></li><li><span class="sidebar-icon"><span class="icon-only-inline" title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><span class="sidebar-icon"><span class="icon-only-inline" title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/Parent" title="The __parent__ property used to point to an object's context, but it has been removed."><code>Object.prototype.__parent__</code></a></s></li><li><span class="sidebar-icon"><span class="icon-only-inline" title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/proto" title="The __proto__ property of Object.prototype is an accessor property (a getter function and a setter function) that exposes the internal [[Prototype]] (either an object or null) of the object through which it is accessed."><code>Object.prototype.__proto__</code></a></li><li><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor" title="The constructor property returns a reference to the Object constructor function that created the instance object. Note that the value of this property is a reference to the function itself, not a string containing the function's name. The value is only read-only for primitive values such as 1, true and &quot;test&quot;."><code>Object.prototype.constructor</code></a></li></ol></li><li><a href="#"><strong>Methods</strong></a><ol><li><span class="sidebar-icon"><span class="icon-only-inline" title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/__defineGetter__" title="The __defineGetter__ method binds an object's property to a function to be called when that property is looked up."><code>Object.prototype.__defineGetter__()</code></a></li><li><span class="sidebar-icon"><span class="icon-only-inline" title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/__defineSetter__" title="The __defineSetter__ method binds an object's property to a function to be called when an attempt is made to set that property."><code>Object.prototype.__defineSetter__()</code></a></li><li><span class="sidebar-icon"><span class="icon-only-inline" title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/__lookupGetter__" title="The __lookupGetter__ method returns the function bound as a getter to the specified property."><code>Object.prototype.__lookupGetter__()</code></a></li><li><span class="sidebar-icon"><span class="icon-only-inline" title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/__lookupSetter__" title="The __lookupSetter__ method returns the function bound as a setter to the specified property."><code>Object.prototype.__lookupSetter__()</code></a></li><li><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty" title="The hasOwnProperty() method returns a boolean indicating whether the object has the specified property as its own property (as opposed to inheriting it)."><code>Object.prototype.hasOwnProperty()</code></a></li><li><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isPrototypeOf" title="The isPrototypeOf() method checks if an object exists in another object's prototype chain."><code>Object.prototype.isPrototypeOf()</code></a></li><li><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/propertyIsEnumerable" title="The propertyIsEnumerable() method returns a Boolean indicating whether the specified property is enumerable."><code>Object.prototype.propertyIsEnumerable()</code></a></li><li><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toLocaleString" title="The toLocaleString() method returns a string representing the object. This method is meant to be overridden by derived objects for locale-specific purposes."><code>Object.prototype.toLocaleString()</code></a></li><li><span class="sidebar-icon"><span class="icon-only-inline" title="This API has not been standardized."><i class="icon-warning-sign"> </i></span></span><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toSource" title="The toSource() method returns a string representing the source code of the object."><code>Object.prototype.toSource()</code></a></li><li><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString" title="The toString() method returns a string representing the object."><code>Object.prototype.toString()</code></a></li><li><span class="sidebar-icon"><span class="icon-only-inline" title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><span class="sidebar-icon"><span class="icon-only-inline" title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/unwatch" title="The unwatch() method removes a watchpoint set with the watch() method."><code>Object.prototype.unwatch()</code></a></s></li><li><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/valueOf" title="The valueOf() method returns the primitive value of the specified object."><code>Object.prototype.valueOf()</code></a></li><li><span class="sidebar-icon"><span class="icon-only-inline" title="This deprecated API should no longer be used, but will probably still work."><i class="icon-thumbs-down-alt"> </i></span></span><span class="sidebar-icon"><span class="icon-only-inline" title="This is an obsolete API and is no longer guaranteed to work."><i class="icon-trash"> </i></span></span><s class="obsoleteElement"><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/watch" title="The watch() method watches for a property to be assigned a value and runs a function when that occurs."><code>Object.prototype.watch()</code></a></s></li><li><a href="/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf" title="The Object.setPrototypeOf() method sets the prototype (i.e., the internal [[Prototype]] property) of a specified object to another object or null."><code>Object.setPrototypeOf()</code></a></li></ol></li></ol>
+  </div>
+
+
+                <!-- approvals -->
+
+
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div> <!-- ends "main-content" -->
+
+
+      <div class="newsletter-box">
+        <div class="newsletter">
+    <form id="newsletterForm" class="newsletter-form nodisable" name="newsletter-form" action="https://www.mozilla.org/en-US/newsletter/" method="post">
+        <div class="newsletter-head">
+            <h2 class="newsletter-teaser">Learn the best of web development</h2>
+            <p class="newsletter-description">Get the latest and greatest from MDN delivered straight to your inbox.</p>
+
+        </div>
+
+        <div class="newsletter-fields">
+            <input type="hidden" id="fmt" name="fmt" value="H">
+            <input type="hidden" id="newsletterNewslettersInput" name="newsletters" value="app-dev" />
+            <div id="newsletterErrors" class="newsletter-errors"></div>
+
+            <div id="newsletterEmail" class="form-group newsletter-group-email">
+                <label for="newsletterEmailInput" class="form-label offscreen">E-mail</label>
+                <input type="email" id="newsletterEmailInput" name="email" class="form-input newsletter-input-email" required placeholder="you@example.com" size="30">
+            </div>
+
+            <div id="newsletterPrivacy" class="form-group form-group-agree newsletter-group-privacy hidden">
+                <input type="checkbox" id="newsletterPrivacyInput" name="privacy" required>
+                <label for="newsletterPrivacyInput">
+                I'm okay with Mozilla handling my info as explained in this <a href="https://www.mozilla.org/privacy/">Privacy Policy</a>.
+                </label>
+            </div>
+            <div id="newsletterSubmit" class="newsletter-group-submit">
+                <button id="newsletter-submit" type="submit" class="button neutral newsletter-submit">
+                    Sign up now<svg class="icon icon-arrow" xmlns="http://www.w3.org/2000/svg" width="23" height="28" viewBox="0 0 23 28" aria-hidden="true">
+    <path d="M23 15a2.01 2.01 0 0 1-.578 1.422L12.25 26.594c-.375.359-.891.578-1.422.578s-1.031-.219-1.406-.578L8.25 25.422c-.375-.375-.594-.891-.594-1.422s.219-1.047.594-1.422L12.828 18h-11C.703 18 0 17.062 0 16v-2c0-1.062.703-2 1.828-2h11L8.25 7.406a1.96 1.96 0 0 1 0-2.812l1.172-1.172c.375-.375.875-.594 1.406-.594s1.047.219 1.422.594l10.172 10.172c.375.359.578.875.578 1.406z"/>
+</svg>
+                </button>
+            </div>
+        </div>
+    </form>
+    <div id="newsletterThanks" class="newsletter-thanks hidden">
+        <h2>Thanks! Please check your inbox to confirm your subscription.</h2>
+        <p>If you haven’t previously confirmed a subscription to a Mozilla-related newsletter you may have to do so. Please check your inbox or your spam filter for an email from us.
+        </p>
+    </div>
+    <button id="newsletterHide" type="button" class="only-icon newsletter-hide hidden">
+        <span>Hide Newsletter Sign-up</span>
+        <svg class="icon icon-close" xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 22 28" aria-hidden="true" role="img"><title></title><path d="M20.281 20.656c0 .391-.156.781-.438 1.062l-2.125 2.125c-.281.281-.672.438-1.062.438s-.781-.156-1.062-.438L11 19.249l-4.594 4.594c-.281.281-.672.438-1.062.438s-.781-.156-1.062-.438l-2.125-2.125c-.281-.281-.438-.672-.438-1.062s.156-.781.438-1.062L6.751 15l-4.594-4.594c-.281-.281-.438-.672-.438-1.062s.156-.781.438-1.062l2.125-2.125c.281-.281.672-.438 1.062-.438s.781.156 1.062.438L11 10.751l4.594-4.594c.281-.281.672-.438 1.062-.438s.781.156 1.062.438l2.125 2.125c.281.281.438.672.438 1.062s-.156.781-.438 1.062L15.249 15l4.594 4.594c.281.281.438.672.438 1.062z"/></svg>
+    </button>
+</div>
+      </div>
+
+
+  <menu type="context" id="edit-history-menu">
+    <menuitem data-action="/en-US/users/signin?next=/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify%24edit" label="Edit page"></menuitem>
+    <menuitem data-action="/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify$history" label="View page history"></menuitem>
+  </menu>
+
+      </div>
+  </main>
+        <div
+    id="developer_needs"
+    class="mdn-cta-container hidden"
+    aria-expanded="false"
+    aria-hidden="true"
+    data-banner="developer_needs"
+>
+    <div id="mdn-cta-content" class="mdn-cta-content cta-background-linear"><div id="developer-needs" class="mdn-cta-content-container">
+    <h2 class="mdn-cta-title slab-text">
+        MDN Survey
+    </h2>
+    <p class="mdn-cta-copy">
+        Help us understand the top 10 needs of Web developers and
+        designers.
+    </p>
+</div>
+<p class="mdn-cta-button-container">
+    <a
+        href="https://qsurvey.mozilla.com/s3/Developer-Needs-Assessment-2019"
+        class="mdn-cta-button"
+        target="_blank"
+        rel="noopener"
+        >Take the survey</a
+    >
+</p>
+    </div>
+    <div class="mdn-cta-controls">
+        <button
+            type="button"
+            id="mdn-cta-collapse"
+            class="mdn-cta-collapse hide-collapse"
+            aria-labelledby="mdn-cta-minimize-icon"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-chevron-down" width="26" height="26" aria-hidden="true"><title id="mdn-cta-minimize-icon">Minimize
+            banner</title><g fill-rule="nonzero" fill="none"><circle fill="#222" cx="13" cy="13" r="13"></circle><path d="M13.544 17.31l6.23-6.16c.301-.297.301-.778 0-1.075l-.726-.719a.776.776 0 0 0-1.087-.001L13 14.237 8.039 9.355a.776.776 0 0 0-1.087.001l-.727.719c-.3.297-.3.778 0 1.075l6.23 6.16c.301.298.789.298 1.09 0z" fill="#FFF"></path></g></svg>
+        </button>
+        <button
+            type="button"
+            id="mdn-cta-close"
+            class="mdn-cta-close"
+            aria-labelledby="mdn-cta-close-icon"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-close" width="22" height="28" viewBox="0 0 22 28" aria-hidden="true" role="img"><title id="mdn-cta-close-icon">Close
+            banner</title><path d="M20.281 20.656c0 .391-.156.781-.438 1.062l-2.125 2.125c-.281.281-.672.438-1.062.438s-.781-.156-1.062-.438L11 19.249l-4.594 4.594c-.281.281-.672.438-1.062.438s-.781-.156-1.062-.438l-2.125-2.125c-.281-.281-.438-.672-.438-1.062s.156-.781.438-1.062L6.751 15l-4.594-4.594c-.281-.281-.438-.672-.438-1.062s.156-.781.438-1.062l2.125-2.125c.281-.281.672-.438 1.062-.438s.781.156 1.062.438L11 10.751l4.594-4.594c.281-.281.672-.438 1.062-.438s.781.156 1.062.438l2.125 2.125c.281.281.438.672.438 1.062s-.156.781-.438 1.062L15.249 15l4.594 4.594c.281.281.438.672.438 1.062z"></path></svg>
+        </button>
+    </div>
+</div>
+
+  <!-- Footer -->
+    <footer id="nav-footer" class="nav-footer">
+      <div class="center">
+          <a href="/en-US/" class="nav-footer-logo">MDN Web Docs</a>
+<div class="footer-group footer-group-mdn">
+  <h2 class="footer-title">MDN</h2>
+  <ul class="footer-list">
+    <li><a href="/en-US/docs/Web">Web Technologies</a></li>
+    <li><a href="/en-US/docs/Learn">Learn Web Development</a></li>
+    <li><a href="/docs/MDN/About">About MDN</a></li>
+    <li><a href="/en-US/docs/MDN/Feedback">Feedback</a></li>
+    <li class="footer-social">
+        <a href="https://twitter.com/mozdevnet">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-twitter" width="26" height="28" viewBox="0 0 26 28" aria-label="Twitter" role="img" focusable="false">
+    <title>Twitter</title>
+    <path d="M25.312 6.375a10.85 10.85 0 0 1-2.531 2.609c.016.219.016.438.016.656 0 6.672-5.078 14.359-14.359 14.359-2.859 0-5.516-.828-7.75-2.266.406.047.797.063 1.219.063 2.359 0 4.531-.797 6.266-2.156a5.056 5.056 0 0 1-4.719-3.5c.313.047.625.078.953.078.453 0 .906-.063 1.328-.172a5.048 5.048 0 0 1-4.047-4.953v-.063a5.093 5.093 0 0 0 2.281.641 5.044 5.044 0 0 1-2.25-4.203c0-.938.25-1.797.688-2.547a14.344 14.344 0 0 0 10.406 5.281 5.708 5.708 0 0 1-.125-1.156 5.045 5.045 0 0 1 5.047-5.047 5.03 5.03 0 0 1 3.687 1.594 9.943 9.943 0 0 0 3.203-1.219 5.032 5.032 0 0 1-2.219 2.781c1.016-.109 2-.391 2.906-.781z"></path>
+</svg>
+        </a>
+    </li>
+    <li class="footer-social">
+        <a href="https://github.com/mdn/">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-github" width="24" height="28" viewBox="0 0 24 28" aria-label="GitHub" role="img" focusable="false">
+    <title>GitHub</title>
+    <path d="M12 2c6.625 0 12 5.375 12 12 0 5.297-3.437 9.797-8.203 11.391-.609.109-.828-.266-.828-.578 0-.391.016-1.687.016-3.297 0-1.125-.375-1.844-.812-2.219 2.672-.297 5.484-1.313 5.484-5.922 0-1.313-.469-2.375-1.234-3.219.125-.313.531-1.531-.125-3.187-1-.313-3.297 1.234-3.297 1.234a11.28 11.28 0 0 0-6 0S6.704 6.656 5.704 6.969c-.656 1.656-.25 2.875-.125 3.187-.766.844-1.234 1.906-1.234 3.219 0 4.594 2.797 5.625 5.469 5.922-.344.313-.656.844-.766 1.609-.688.313-2.438.844-3.484-1-.656-1.141-1.844-1.234-1.844-1.234-1.172-.016-.078.734-.078.734.781.359 1.328 1.75 1.328 1.75.703 2.141 4.047 1.422 4.047 1.422 0 1 .016 1.937.016 2.234 0 .313-.219.688-.828.578C3.439 23.796.002 19.296.002 13.999c0-6.625 5.375-12 12-12zM4.547 19.234c.031-.063-.016-.141-.109-.187-.094-.031-.172-.016-.203.031-.031.063.016.141.109.187.078.047.172.031.203-.031zm.484.532c.063-.047.047-.156-.031-.25-.078-.078-.187-.109-.25-.047-.063.047-.047.156.031.25.078.078.187.109.25.047zm.469.703c.078-.063.078-.187 0-.297-.063-.109-.187-.156-.266-.094-.078.047-.078.172 0 .281s.203.156.266.109zm.656.656c.063-.063.031-.203-.063-.297-.109-.109-.25-.125-.313-.047-.078.063-.047.203.063.297.109.109.25.125.313.047zm.891.391c.031-.094-.063-.203-.203-.25-.125-.031-.266.016-.297.109s.063.203.203.234c.125.047.266 0 .297-.094zm.984.078c0-.109-.125-.187-.266-.172-.141 0-.25.078-.25.172 0 .109.109.187.266.172.141 0 .25-.078.25-.172zm.906-.156c-.016-.094-.141-.156-.281-.141-.141.031-.234.125-.219.234.016.094.141.156.281.125s.234-.125.219-.219z"></path>
+</svg>
+        </a>
+    </li>
+  </ul>
+</div>
+
+          <a href="https://mozilla.org" class="nav-footer-mozilla">Mozilla</a>
+<div class="footer-group footer-group-mozilla">
+  <h2 class="footer-title">Mozilla</h2>
+  <ul class="footer-list">
+    <li><a href="https://www.mozilla.org/about/">About</a></li>
+    <li><a href="https://www.mozilla.org/contact/">Contact Us</a></li>
+    <li><a href="https://www.mozilla.org/firefox/?utm_source=developer.mozilla.org&utm_campaign=footer&utm_medium=referral">Firefox</a></li>
+    <li class="footer-social">
+        <a href="https://twitter.com/mozilla">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-twitter" width="26" height="28" viewBox="0 0 26 28" aria-label="Twitter" role="img" focusable="false">
+    <title>Twitter</title>
+    <path d="M25.312 6.375a10.85 10.85 0 0 1-2.531 2.609c.016.219.016.438.016.656 0 6.672-5.078 14.359-14.359 14.359-2.859 0-5.516-.828-7.75-2.266.406.047.797.063 1.219.063 2.359 0 4.531-.797 6.266-2.156a5.056 5.056 0 0 1-4.719-3.5c.313.047.625.078.953.078.453 0 .906-.063 1.328-.172a5.048 5.048 0 0 1-4.047-4.953v-.063a5.093 5.093 0 0 0 2.281.641 5.044 5.044 0 0 1-2.25-4.203c0-.938.25-1.797.688-2.547a14.344 14.344 0 0 0 10.406 5.281 5.708 5.708 0 0 1-.125-1.156 5.045 5.045 0 0 1 5.047-5.047 5.03 5.03 0 0 1 3.687 1.594 9.943 9.943 0 0 0 3.203-1.219 5.032 5.032 0 0 1-2.219 2.781c1.016-.109 2-.391 2.906-.781z"></path>
+</svg>
+        </a>
+    </li>
+    <li class="footer-social">
+        <a href="https://www.instagram.com/mozillagram/">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-instagram" width="24" height="28" viewBox="0 0 24 28" aria-label="Instagram" role="img" focusable="false">
+    <title>Instagram</title>
+    <path d="M16 14c0-2.203-1.797-4-4-4s-4 1.797-4 4 1.797 4 4 4 4-1.797 4-4zm2.156 0c0 3.406-2.75 6.156-6.156 6.156S5.844 17.406 5.844 14 8.594 7.844 12 7.844s6.156 2.75 6.156 6.156zm1.688-6.406c0 .797-.641 1.437-1.437 1.437S16.97 8.39 16.97 7.594s.641-1.437 1.437-1.437 1.437.641 1.437 1.437zM12 4.156c-1.75 0-5.5-.141-7.078.484-.547.219-.953.484-1.375.906s-.688.828-.906 1.375c-.625 1.578-.484 5.328-.484 7.078s-.141 5.5.484 7.078c.219.547.484.953.906 1.375s.828.688 1.375.906c1.578.625 5.328.484 7.078.484s5.5.141 7.078-.484c.547-.219.953-.484 1.375-.906s.688-.828.906-1.375c.625-1.578.484-5.328.484-7.078s.141-5.5-.484-7.078c-.219-.547-.484-.953-.906-1.375s-.828-.688-1.375-.906C17.5 4.015 13.75 4.156 12 4.156zM24 14c0 1.656.016 3.297-.078 4.953-.094 1.922-.531 3.625-1.937 5.031s-3.109 1.844-5.031 1.937c-1.656.094-3.297.078-4.953.078s-3.297.016-4.953-.078c-1.922-.094-3.625-.531-5.031-1.937S.173 20.875.08 18.953C-.014 17.297.002 15.656.002 14s-.016-3.297.078-4.953c.094-1.922.531-3.625 1.937-5.031s3.109-1.844 5.031-1.937c1.656-.094 3.297-.078 4.953-.078s3.297-.016 4.953.078c1.922.094 3.625.531 5.031 1.937s1.844 3.109 1.937 5.031C24.016 10.703 24 12.344 24 14z"></path>
+</svg>
+        </a>
+    </li>
+  </ul>
+</div>
+
+
+
+    <form class="languages go" method="get" action="/en-US/docs/Web">
+      <label for="language">Other languages:</label>
+      <select id="language" class="wiki-l10n" name="next" dir="ltr">
+        <option title="English (US)" data-locale="en-US" value="/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" selected>
+          English (US) (en-US)
+        </option>
+
+          <option title="Arabic" data-locale="en-US" value="/ar/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+            عربي (ar)
+          </option>
+          <option title="Catalan" data-locale="en-US" value="/ca/docs/Web/JavaScript/Referencia/Objectes_globals/JSON/stringify">
+            Català (ca)
+          </option>
+          <option title="German" data-locale="en-US" value="/de/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+            Deutsch (de)
+          </option>
+          <option title="Spanish" data-locale="en-US" value="/es/docs/Web/JavaScript/Referencia/Objetos_globales/JSON/stringify">
+            Español (es)
+          </option>
+          <option title="French" data-locale="en-US" value="/fr/docs/Web/JavaScript/Reference/Objets_globaux/JSON/stringify">
+            Français (fr)
+          </option>
+          <option title="Italian" data-locale="en-US" value="/it/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+            Italiano (it)
+          </option>
+          <option title="Japanese" data-locale="en-US" value="/ja/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+            日本語 (ja)
+          </option>
+          <option title="Korean" data-locale="en-US" value="/ko/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+            한국어 (ko)
+          </option>
+          <option title="Portuguese (Brazilian)" data-locale="en-US" value="/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+            Português (do Brasil) (pt-BR)
+          </option>
+          <option title="Russian" data-locale="en-US" value="/ru/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+            Русский (ru)
+          </option>
+          <option title="Turkish" data-locale="en-US" value="/tr/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+            Türkçe (tr)
+          </option>
+          <option title="Ukrainian" data-locale="en-US" value="/uk/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+            Українська (uk)
+          </option>
+          <option title="Chinese (Simplified)" data-locale="en-US" value="/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+            中文 (简体) (zh-CN)
+          </option>
+          <option title="Chinese (Traditional)" data-locale="en-US" value="/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+            正體中文 (繁體) (zh-TW)
+          </option>
+      </select>
+      <noscript><button type="submit">Go</button></noscript>
+    </form>
+
+
+
+
+            <ul class="footer-tos">
+              <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">Terms</a></li>
+              <li><a href="https://www.mozilla.org/privacy/websites/">Privacy</a></li>
+              <li><a href="https://www.mozilla.org/privacy/websites/#cookies">Cookies</a></li>
+            </ul>
+
+            <div id="license" class="contentinfo">
+              <p>&copy; 2005-2019 Mozilla and individual contributors.</p> <p>Content is available under <a href="/en-US/docs/MDN/About#Copyrights_and_licenses">these licenses</a>.</p>
+            </div>
+
+      </div>
+    </footer>
+
+  <!-- site js -->
+
+
+    <!--[if lte IE 8]><script type="text/javascript" src="https://developer.mozilla.org/static/build/js/selectivizr.8bb9e662e963.js" charset="utf-8"></script><![endif]-->
+
+
+    <script src="https://developer.mozilla.org/static/jsi18n/en-US/javascript.414b87adc480.js"></script>
+    <script type="text/javascript" src="https://developer.mozilla.org/static/build/js/main.b0f831aaadf5.js" charset="utf-8"></script>
+    <script>
+    if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
+  </script>
+
+
+    <script async type="text/javascript" src="https://developer.mozilla.org/static/build/js/wiki.ae83915abe8f.js" charset="utf-8"></script>
+
+
+
+
+
+
+
+
+
+    <script async type="text/javascript" src="https://developer.mozilla.org/static/build/js/newsletter.532963e204cb.js" charset="utf-8"></script>
+
+
+
+    <script async type="text/javascript" src="https://developer.mozilla.org/static/build/js/banners.c6436b9ca87a.js" charset="utf-8"></script>
+
+
+</body>
+</html>
