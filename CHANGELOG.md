@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [UNRELEASED]
 (nothing yet)
 
+## [1.0.2] - 2020-05-01
+### Fixed
+- upgraded lockfile and eslint to prevent audit warnings
+- jsdocs incorrect example
+
 ## [1.0.1] - 2019-08-27
 ### Fixed
 - upgraded lockfile and eslint to prevent audit warnings

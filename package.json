@@ -1,6 +1,6 @@
 {
   "name": "html-safe-json",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "src/index.js",
   "repository": "git@github.com:dzek69/html-safe-json.git",
   "author": "Jacek Nowacki",

@@ -23,7 +23,7 @@
  * that) is used as white space. If this parameter is not provided (or is null), no white space is used.
  * @example
  * stringify({ comment: "xss, here i come</script><script>alert(69)</script>" });
- * // {"comment":"xss, here i come<\u002fscript><script>alert(69)<\u002fscript>"}
+ * // `{"comment":"xss, here i come\u003c/script>\u003cscript>alert(69)\u003c/script>"}`
  * @returns {void|string} - A JSON string representing the given value or undefined if non-convertable value is passed.
  */
 const stringify = (source, replacer, space) => {
@@ -32,7 +32,7 @@ const stringify = (source, replacer, space) => {
         return result;
     }
     return result
-        .replace(/<(\/?)(script)/gi, "\\u003c$1$2") // $1 here is to preserve case of the tag name
+        .replace(/<(\/?)(script)/gi, "\\u003c$1$2") // $2 here is to preserve case of the tag name
         .replace(/]]>/g, "]]\\u003e")
         .replace(/\u2028/g, "\\u2028")
         .replace(/\u2029/g, "\\u2029")
