@@ -1,16 +1,19 @@
 /.idea/
 /build-scripts/
 /test/
-/dist/**/*.spec.js
 /benchmark
 /src/examples
 /dist/examples
+/esm/examples
 
-/.babelrc
+/babel.config.js
+/jest.config.cjs
 /yarn.lock
 /*.tgz
 /*.log
-/jsdoc.json
 /.yarnclean
+/nodemon.json
 /.editorconfig
+/tsconfig.*
 /.eslintrc.json
+/pagesconfig.json

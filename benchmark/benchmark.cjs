@@ -1,9 +1,11 @@
+/* eslint-disable */
 const fs = require("fs");
 
 const htmlescape = require("htmlescape");
-const stringify = require("../src");
 
-const html = String(fs.readFileSync("./string.txt"));
+const { stringify } = require("../dist");
+
+const html = String(fs.readFileSync("./benchmark/string.txt"));
 
 const REPEAT = 1000;
 
@@ -15,7 +17,7 @@ const slowerOrFaster = diff => {
 };
 
 const relativeDifference = (a, b) => {
-    return Math.abs((a - b) / ((a + b) / 2)) * 100; // eslint-disable-line no-magic-numbers
+    return Math.abs((a - b) / ((a + b) / 2)) * 100;
 };
 
 const bench = (repeat) => {

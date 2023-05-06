@@ -1,4 +1,5 @@
-const stringify = require("../index");
+/* eslint-disable */
+import stringify from "../index.js";
 
 const bad = {
     a: "</script><script>alert(1)</script>",
@@ -10,9 +11,9 @@ const endpoint = (req, res) => {
 <script>window.safeValue = ${stringify(bad)};</script>
 <script>window.value = ${JSON.stringify(bad)};</script>
 
-Check out window.value and window.saveValue in the console.
+Check out window.value and window.safeValue in the console.
 </body>`;
     res.send(html);
 };
 
-module.exports = endpoint;
+export default endpoint;

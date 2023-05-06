@@ -1,4 +1,5 @@
-const stringify = require("../index");
+/* eslint-disable */
+import { stringify } from "../index.js";
 
 const bad = {
     a: `\u2028\u2029td`,
@@ -14,9 +15,9 @@ const endpoint = (req, res) => {
     "safeValue": window.safeValue,
 })</script>
 
-Check out window.value and window.saveValue in older browser (ie: Internet Explorer 11)
+Check out window.value and window.safeValue in older browser (ie: Internet Explorer 11)
 </body>`;
     res.send(html);
 };
 
-module.exports = endpoint;
+export default endpoint;

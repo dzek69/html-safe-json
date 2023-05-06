@@ -1,26 +1,29 @@
 # html-safe-json
 
-Small wrapper for JSON-stringify that makes result safe to embed directly into HTML `<script>` tag.
+Secure JSON.stringify for injecting into HTML's <script> tag.
+
+- 📦 No dependencies - use it anywhere
+- 🚀 Fast - ~36% faster than htmlescape
+- 🛡️ Secure - fully tested and used in production
 
 ## Links worth reading to understand the issue
 
-- [Subsume JSON a.k.a. JSON ⊂ ECMAScript][3]  
+- [Subsume JSON a.k.a. JSON ⊂ ECMAScript][3]
 - [The end-tag open (ETAGO) delimiter][4]
 - [OWASP/json-sanitizer - GitHub][5]
 
+## What exactly does `html-safe-json` do:
 
-## So what exactly does `html-safe-json` do:
-
-It follows the API of JSON.stringify, uses JSON.stringify internally but on the result it makes some changes - it
-encodes 6 strings into unicode representation to prevent possible XSS attacks or syntax errors in older browsers.
+It wraps JSON.stringify, exposing the same API to you but on the result it does some changes - it encodes 6 strings into
+unicode representation to prevent possible XSS attacks (or syntax errors in older browsers).
 
 These strings are:
- - `<script`
- - `</script`
- - `]]>`
- - `-->`
- - `\u2028`
- - `\u2029`
+- `<script`
+- `</script`
+- `]]>`
+- `-->`
+- `\u2028`
+- `\u2029`
 
 ## Usage
 
@@ -33,7 +36,7 @@ It accepts `value`, `replacer` and `space` arguments and returns stringified res
 Usually you probably will use this library like that:
 
 ```javascript
-const stringify = require("html-safe-json");
+import { stringify } from "html-safe-json"; // or require
 
 const badData = {
     a: "</script><script>alert(1)</script>",
@@ -42,7 +45,7 @@ const badData = {
 const endpoint = (req, res) => {
     const html = `<html><body>
 <script>window.data = ${stringify(badData)};</script>
-<!-- init your scripts here --> 
+<!-- init your scripts here -->
 </body></html>`;
     res.send(html);
 };
@@ -51,23 +54,26 @@ const endpoint = (req, res) => {
 ## Demos
 
 If you want to see a difference between `html-safe-json` and bare `JSON.stringify` in action you can clone repository of
-this project, install dependencies and run `npm run dev` script. Then open `127.0.0.1:1337` in your browser for demos. 
+this project, install dependencies and run `yarn start:dev` script.
+
+Then open `127.0.0.1:1337` in your browser for demos.
+
+Alert message is expected - it demonstrates that JSON.stringify is unsafe, while `html-safe-json` is safe.
 
 ## Bonus knowledge / other solutions
 
 Next.js uses (as of v2) [htmlescape][2] library to secure data before embedding into HTML. It's more aggressive and
-encodes every `<` and `>` characters thus automatically resolves most of the issues. This library saves both output
-bytes and processing power (it's faster by ~25%) by replacing only what is needed.
+encodes every `<` and `>` characters thus automatically resolves most of the issues. `html-safe-json` saves both output
+bytes and processing power (it's faster by ~36%) by replacing only what is needed.
 
 Benchmark run steps:
 - install deps
-- `cd benchmark`
-- `node benchmark`
+- `yarn start:benchmark`
 
-> html-safe-json is faster by 346 ms (1196ms vs 1542ms in total) difference: 25 %
+> html-safe-json is faster by 277 ms (586ms vs 863ms in total) difference: 38 %
 
-Benchmark currently stringifies a string, this is partially intentional - comparing actual converting object to string
-is useless, because both librarires uses `JSON.stringify` anyway and what's matter is how fast encoding is done.
+Benchmark currently stringifies a string, this is intentional - comparing converting object to string is useless,
+because both libs uses `JSON.stringify`. What matters is how fast escaping is done.
 
 ## License
 

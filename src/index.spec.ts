@@ -1,4 +1,4 @@
-const stringify = require("./index");
+import { stringify } from "./index.js";
 
 describe("html-safe-json", () => {
     it("should encode basic data that decodes to same value", () => {
@@ -180,7 +180,7 @@ describe("html-safe-json", () => {
         const basic = { a: "value", b: 5 };
         const encoded = stringify(basic, (key, value) => {
             if (!key) {
-                return value;
+                return value as unknown;
             }
             return "<script>xss</script>";
         });
@@ -231,5 +231,16 @@ describe("html-safe-json", () => {
 
         JSON.parse(encoded).a.length.must.be(8);
         JSON.parse(JSONencoded).a.length.must.be(8);
+    });
+
+    it("returns undefined when given something that cannot be JSON stringified", () => {
+        const encodedFn = stringify(() => null);
+        must(encodedFn).be.undefined();
+
+        const encodedUndefined = stringify(undefined);
+        must(encodedUndefined).be.undefined();
+
+        const encodedSymbol = stringify(Symbol("a"));
+        must(encodedSymbol).be.undefined();
     });
 });

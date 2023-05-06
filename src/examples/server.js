@@ -1,7 +1,7 @@
-const express = require("express");
+import express from "express";
 
-const unicodeChars = require("./unicode-chars");
-const scriptTags = require("./script-tags");
+import unicodeChars from "./unicode-chars.js";
+import scriptTags from "./script-tags.js";
 
 const app = express();
 
