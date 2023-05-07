@@ -27,6 +27,10 @@ These strings are:
 
 ## Usage
 
+### Documentation
+
+You can find documentation here: https://ezez.dev/docs/html-safe-json/latest
+
 ### API
 
 Function API is identical to native [JSON.stringify][1].

@@ -1,8 +1,8 @@
 {
     "pages": [
         {
-            "title": "Test",
-            "source": "./tutorials/Test.md"
+            "title": "Usage",
+            "source": "./tutorials/Usage.md"
         }
     ],
     "source": "tutorials"
