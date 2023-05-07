@@ -3,6 +3,10 @@
         {
             "title": "Usage",
             "source": "./tutorials/Usage.md"
+        },
+        {
+            "title": "Changelog",
+            "source": "./CHANGELOG.md"
         }
     ],
     "source": "tutorials"

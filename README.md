@@ -1,6 +1,6 @@
 # html-safe-json
 
-Secure JSON.stringify for injecting into HTML's <script> tag.
+Secure JSON.stringify for injecting into HTML's `<script>` tag.
 
 - 📦 No dependencies - use it anywhere
 - 🚀 Fast - ~36% faster than htmlescape

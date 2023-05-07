@@ -1,5 +1,5 @@
 This library exposes a single function - `stringify` - which is identical to native JSON.stringify. Returned value can
-be safely injected into HTML's <script> tag.
+be safely injected into HTML's `<script>` tag.
 
 ```typescript
 import { stringify } from "html-safe-json";

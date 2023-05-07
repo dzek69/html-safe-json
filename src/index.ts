@@ -27,8 +27,11 @@ type Space = string | number;
  * space should be used. If this is a String, the string (or the first 10 characters of the string, if it's longer than
  * that) is used as white space. If this parameter is not provided (or is null), no white space is used.
  * @example
- * stringify({ comment: "xss, here i come</script><script>alert(69)</script>" });
- * // `{"comment":"xss, here i come\u003c/script>\u003cscript>alert(69)\u003c/script>"}`
+ * `stringify({ comment: "xss, here i come</script><script>alert(69)</script>" });`
+ *
+ * will result in
+ *
+ * `// {"comment":"xss, here i come\u003c/script>\u003cscript>alert(69)\u003c/script>"}`
  * @returns {void|string} - A JSON string representing the given value or undefined if non-convertable value is passed.
  */
 const stringify = (source: Source, replacer?: Replacer, space?: Space) => {
