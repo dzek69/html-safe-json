@@ -4,11 +4,11 @@
     ],
     "compilerOptions": {
         "importHelpers": false,
-        "jsx": "react",
-        "module": "commonjs",
+        "jsx": "react-jsx",
+        "module": "es2015",
         "noEmit": false,
-        "outDir": "./dist",
-        "target": "es2017"
+        "outDir": "./esm",
+        "target": "es2019"
     },
     "include": [
         "src/"

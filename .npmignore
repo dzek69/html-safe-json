@@ -6,7 +6,6 @@
 /dist/examples
 /esm/examples
 
-/babel.config.js
 /jest.config.cjs
 /yarn.lock
 /*.tgz
